@@ -1,0 +1,43 @@
+NAME = phill_one
+
+### FILES
+
+PONE_DIR_C = src/
+
+PONE_DIR_O = obj/
+
+PONE_FILES_C = 
+
+PONE_FILES_O = $(addprefix $(PONE_DIR_O), $(PONE_FILES_C:c=o))
+
+### GENERAL
+
+H_FILE = philo_one.h
+
+I = -I 
+
+CC = gcc
+
+C_FLAGS = -Wall -Wextra -Werror -lpthread $I
+
+RM = rm -f
+
+### RULES
+
+all: $(NAME)
+
+$(NAME): $(PONE_FILES_O)
+	$(CC) $^ -o $@
+
+$(PONE_DIR_O)%.o: $(PONE_DIR_C)%.c $(H_FILE)
+	$(CC) $(C_FLAGS) -c $< -o $@
+
+clean:
+	$(RM) $(PONE_FILES_O)
+
+fclean: clean
+	$(RM) $(NAME)
+
+re: fclean all
+
+.PHONY: all clean fclean re

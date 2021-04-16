@@ -3,7 +3,7 @@
 
 volatile int g_val;
 
-pthread_mutex_t lock;
+//pthread_mutex_t lock;
 
 void
 	*thread_func(void *val)
@@ -27,7 +27,7 @@ int
 	int i = 1;
 
 	g_val = 0;
-	pthread_mutex_init(&lock, NULL);
+//	pthread_mutex_init(&lock, NULL);
 	while (i < 1000)
 	{
 
@@ -41,7 +41,7 @@ int
 		pthread_join(thread2, NULL);
 		pthread_join(thread3, NULL);
 	}
-		pthread_mutex_destroy(&lock);
+//		pthread_mutex_destroy(&lock);
 		printf("Expected result: %d\n", 1001 * (1000 / 2));
 		printf("Actual result: %d\n", g_val);
 	return (0);
