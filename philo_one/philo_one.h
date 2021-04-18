@@ -15,24 +15,37 @@ typedef enum	e_print_msg {
 	philo_dead
 }				t_print_msg;
 
-typedef struct	s_philo_state {
-	int last_meal;
-	int isdead;
-}				t_philo_state;
-
 typedef struct	s_philo_shared_data {
-	int				start_time;
 	int				nb_philo;
+	int				nb_forks;
 	int				time_to_die;
 	int				time_to_eat;
 	int				time_to_sleep;
 	int				max_eat;
 	pthread_mutex_t	*mutex_arr;
 	pthread_mutex_t print_mutex;
-	struct timeval  timeval_s;
-	t_philo_state	*philo_state;
+	struct timeval  start_time;
 }				t_philo_shared_data;
 
+typedef struct	s_philo_data {
+	int					id;
+	t_philo_shared_data *shared_data;
+}				t_philo_data;
+
+
+int			init_data(t_philo_shared_data *shared_data, int ac, char **av);
 int		    print_msg(pthread_mutex_t *print_mutex, int state, int id, int time);
+int			check_input(int ac, char **av);
+int			clear_shared_data(t_philo_shared_data *shared_data, int mutex_arr_len);
+
+int			philo_create(t_philo_shared_data *shared_data, int id);
+void		*philo_life(void *philo_data);
+
+/*
+** CHRONO
+*/
+
+int			chrono_start(struct timeval *timeval_s);
+int			chrono_iselapsed(struct timeval *start_time, int microsec);
 
 #endif

@@ -6,7 +6,7 @@ PONE_DIR_C = src/
 
 PONE_DIR_O = obj/
 
-PONE_FILES_C = main.c print_msg.c
+PONE_FILES_C = main.c print_msg.c check_input.c chrono.c init_data.c philo_create.c philo_life.c
 
 PONE_FILES_O = $(addprefix $(PONE_DIR_O), $(PONE_FILES_C:c=o))
 
@@ -20,7 +20,7 @@ CC = gcc
 
 C_FLAGS = -Wall -Wextra -Werror $I
 
-PTHREAD_LIB = -lpthread
+PTHREAD_LIB = -pthread
 
 RM = rm -f
 
