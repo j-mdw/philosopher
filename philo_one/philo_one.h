@@ -22,6 +22,7 @@ typedef struct	s_philo_shared_data {
 	int				time_to_eat;
 	int				time_to_sleep;
 	int				max_eat;
+	int				dead_philo;
 	pthread_mutex_t	*mutex_arr;
 	pthread_mutex_t print_mutex;
 	struct timeval  start_time;

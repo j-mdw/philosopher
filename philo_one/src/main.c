@@ -25,6 +25,8 @@ int
     t_philo_shared_data shared_data;
     // t_philo_shared_data dst;
 
+    if (-1)
+        printf("-1111111\n");
     if (!check_input(ac, av))
     {
         printf("Wrong input\n");

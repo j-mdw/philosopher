@@ -45,6 +45,7 @@ int
             return (clear_shared_data(shared_data, i));
         i++;
     }
+    shared_data->dead_philo = 0;
     chrono_start(&shared_data->start_time);
     return (1);
 }
