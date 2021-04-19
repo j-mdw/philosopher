@@ -29,19 +29,20 @@ long long int
 int
     chrono_iselapsed(struct timeval *start_time, int microsec)
 {
-    // struct timeval  tod;
     long long int   elapsed;
-    // long long int   time1;
 
-    // if (gettimeofday(&tod, NULL) != 0)
-    //     return (-1);
-    // time0 = start_time->tv_sec * 1000000;
-    // time0 += start_time->tv_usec;
-
-    // time1 = tod.tv_sec * 1000000;
-    // time1 += tod.tv_usec;
     elapsed = chrono_get_timeelapsed(start_time);
     if (elapsed > microsec)
         return (1);
     return (0);
+}
+
+void
+    chrono_timer(struct timeval *start_time, int timer)
+{
+    long long int time;
+
+    time = timer - chrono_get_timeelapsed(start_time);
+    if (time > 0)
+        usleep(time);
 }

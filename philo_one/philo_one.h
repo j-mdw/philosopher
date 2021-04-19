@@ -49,5 +49,5 @@ void		*philo_life(void *philo_data);
 int				chrono_start(struct timeval *timeval_s);
 long long int	chrono_get_timeelapsed(struct timeval *start_time);
 int				chrono_iselapsed(struct timeval *start_time, int microsec);
-
+void			chrono_timer(struct timeval *start_time, int timer);
 #endif
