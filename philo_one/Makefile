@@ -20,6 +20,8 @@ CC = gcc
 
 C_FLAGS = -Wall -Wextra -Werror $I
 
+SANIT = -g3 -fsanitize=address
+
 PTHREAD_LIB = -pthread
 
 RM = rm -f
@@ -29,10 +31,10 @@ RM = rm -f
 all: $(NAME)
 
 $(NAME): $(PONE_FILES_O)
-	$(CC) $(PTHREAD_LIB) $^ -o $@
+	$(CC) $(SANIT) $(PTHREAD_LIB) $^ -o $@
 
 $(PONE_DIR_O)%.o: $(PONE_DIR_C)%.c $(H_FILE)
-	$(CC) $(C_FLAGS) -c $< -o $@
+	$(CC) $(C_FLAGS) $(SANIT) -c $< -o $@
 
 clean:
 	$(RM) $(PONE_FILES_O)

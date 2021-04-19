@@ -29,6 +29,7 @@ typedef struct	s_philo_shared_data {
 
 typedef struct	s_philo_data {
 	int					id;
+	int					msg;
 	t_philo_shared_data *shared_data;
 }				t_philo_data;
 
@@ -45,7 +46,8 @@ void		*philo_life(void *philo_data);
 ** CHRONO
 */
 
-int			chrono_start(struct timeval *timeval_s);
-int			chrono_iselapsed(struct timeval *start_time, int microsec);
+int				chrono_start(struct timeval *timeval_s);
+long long int	chrono_get_timeelapsed(struct timeval *start_time);
+int				chrono_iselapsed(struct timeval *start_time, int microsec);
 
 #endif

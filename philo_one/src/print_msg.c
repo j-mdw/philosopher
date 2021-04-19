@@ -10,10 +10,11 @@ int
         "is thinking",
         "died"};
 
-    if (pthread_mutex_lock(print_mutex) != 0)
-        return (0);
-    printf("%d %d %s\n", time, id, state_arr[state]);
-    if (pthread_mutex_unlock(print_mutex) != 0)
+    (void)print_mutex;
+    // if (pthread_mutex_lock(print_mutex) != 0)
+        // return (0);
+    printf("%d %d %s\n", time / 1000, id, state_arr[state]);
+    // if (pthread_mutex_unlock(print_mutex) != 0)
         return (0);
     return (1);
 }
