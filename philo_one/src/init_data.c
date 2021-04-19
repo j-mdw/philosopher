@@ -17,6 +17,20 @@ static int
     return (ret);
 }
 
+static void
+    set_last_meal(t_philo_shared_data *shared_data)
+{
+    int i;
+
+    i = 0;
+    while (i < shared_data->nb_philo)
+    {
+        (shared_data->last_meal[i]).tv_sec = shared_data->start_time.tv_sec;
+        (shared_data->last_meal[i]).tv_usec = shared_data->start_time.tv_usec;
+        i++;
+    }
+}
+
 int
     init_data(t_philo_shared_data *shared_data, int ac, char **av)
 {
@@ -28,6 +42,7 @@ int
     shared_data->time_to_eat = philo_atoi(av[3]) * 1000;
     shared_data->time_to_sleep = philo_atoi(av[4]) * 1000;
     shared_data->mutex_arr = NULL;
+    shared_data->last_meal = NULL;
 
     if (ac == 6)
         shared_data->max_eat = philo_atoi(av[5]);
@@ -45,7 +60,8 @@ int
             return (clear_shared_data(shared_data, i));
         i++;
     }
-    shared_data->dead_philo = 0;
+    if (!(shared_data->last_meal = malloc(sizeof(struct timeval) * shared_data->nb_philo)))
     chrono_start(&shared_data->start_time);
+    set_last_meal(shared_data);
     return (1);
 }
