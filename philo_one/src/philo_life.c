@@ -21,46 +21,52 @@ void
 }
 
 void
+    philo_eating(t_philo_data *data, struct timeval *time, int *forks)
+{
+        pthread_mutex_lock(&data->shared_data->mutex_arr[forks[0]]);
+        print_msg(&data->shared_data->print_mutex, philo_fork,
+            data->id,
+            chrono_get_timeelapsed(&data->shared_data->start_time));        
+        pthread_mutex_lock(&data->shared_data->mutex_arr[forks[1]]);
+        chrono_start(time);       
+        data->shared_data->last_meal[data->id - 1].tv_sec = time->tv_sec;
+        data->shared_data->last_meal[data->id - 1].tv_usec = time->tv_usec;        
+        data->shared_data->eat_count[data->id - 1]++;
+        print_msg(&data->shared_data->print_mutex, philo_fork, 
+            data->id,
+            chrono_get_timeelapsed(&data->shared_data->start_time));
+        print_msg(&data->shared_data->print_mutex, philo_eat, 
+            data->id,
+            chrono_get_timeelapsed(&data->shared_data->start_time));        
+        chrono_timer(time, data->shared_data->time_to_eat);
+
+        pthread_mutex_unlock(&data->shared_data->mutex_arr[forks[0]]);
+        pthread_mutex_unlock(&data->shared_data->mutex_arr[forks[1]]);
+}
+void
     *philo_life(void *philo_data)
 {
     struct timeval  time;
-    t_philo_data    *philo_data_c;
-    int             fork_1;
-    int             fork_2;
+    t_philo_data    *data;
+    int             forks[2];
     int             i;
 
-    philo_data_c = (t_philo_data *)philo_data;
-    set_forks_index(philo_data_c->shared_data->nb_forks, philo_data_c->id, &fork_1, &fork_2);
-    i = philo_data_c->shared_data->max_eat;
-    while (i && !philo_data_c->shared_data->death)
+    data = (t_philo_data *)philo_data;
+    if (data->id % 2)
+        usleep(data->shared_data->time_to_eat);
+    set_forks_index(data->shared_data->nb_forks, data->id, &forks[0], &forks[1]);
+    i = data->shared_data->max_eat;
+    while (i && !data->shared_data->death)
     {
-        pthread_mutex_lock(&philo_data_c->shared_data->mutex_arr[fork_1]);
-        print_msg(&philo_data_c->shared_data->print_mutex, philo_fork,
-            philo_data_c->id,
-            chrono_get_timeelapsed(&philo_data_c->shared_data->start_time));        
-        pthread_mutex_lock(&philo_data_c->shared_data->mutex_arr[fork_2]);
-        chrono_start(&time);
-        philo_data_c->shared_data->last_meal[philo_data_c->id - 1].tv_sec = time.tv_sec;
-        philo_data_c->shared_data->last_meal[philo_data_c->id - 1].tv_usec = time.tv_usec;        
-        print_msg(&philo_data_c->shared_data->print_mutex, philo_fork, 
-            philo_data_c->id,
-            chrono_get_timeelapsed(&philo_data_c->shared_data->start_time));
-        print_msg(&philo_data_c->shared_data->print_mutex, philo_eat, 
-            philo_data_c->id,
-            chrono_get_timeelapsed(&philo_data_c->shared_data->start_time));        
-        chrono_timer(&time, philo_data_c->shared_data->time_to_eat);
+        philo_eating(data, &time, forks);
+        print_msg(&data->shared_data->print_mutex, philo_sleep, data->id,
+        chrono_get_timeelapsed(&data->shared_data->start_time));
 
-        pthread_mutex_unlock(&philo_data_c->shared_data->mutex_arr[fork_1]);
-        pthread_mutex_unlock(&philo_data_c->shared_data->mutex_arr[fork_2]);
-        print_msg(&philo_data_c->shared_data->print_mutex, philo_sleep, philo_data_c->id,
-        chrono_get_timeelapsed(&philo_data_c->shared_data->start_time));
-
-        chrono_timer(&time, philo_data_c->shared_data->time_to_eat + philo_data_c->shared_data->time_to_sleep);
-        print_msg(&philo_data_c->shared_data->print_mutex, philo_think, philo_data_c->id,
-        chrono_get_timeelapsed(&philo_data_c->shared_data->start_time));
+        chrono_timer(&time, data->shared_data->time_to_eat + data->shared_data->time_to_sleep);
+        print_msg(&data->shared_data->print_mutex, philo_think, data->id,
+        chrono_get_timeelapsed(&data->shared_data->start_time));
         if (i > 0)
             i--;
     }
-    printf("Hello from philo %d\n", ((t_philo_data *)philo_data)->id);
     return (NULL);
 }

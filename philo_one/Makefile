@@ -6,7 +6,9 @@ PONE_DIR_C = src/
 
 PONE_DIR_O = obj/
 
-PONE_FILES_C = main.c print_msg.c check_input.c chrono.c init_data.c philo_create.c philo_life.c
+PONE_FILES_C =	main.c print_msg.c check_input.c \
+				chrono.c init_data.c philo_create.c \
+				philo_life.c clear_shared_data.c monitor.c
 
 PONE_FILES_O = $(addprefix $(PONE_DIR_O), $(PONE_FILES_C:c=o))
 
@@ -31,7 +33,8 @@ RM = rm -f
 all: $(NAME)
 
 $(NAME): $(PONE_FILES_O)
-	$(CC) $(SANIT) $(PTHREAD_LIB) $^ -o $@
+	$(CC) $(PTHREAD_LIB) $^ -o $@
+	#$(CC) $(SANIT) $(PTHREAD_LIB) $^ -o $@
 
 $(PONE_DIR_O)%.o: $(PONE_DIR_C)%.c $(H_FILE)
 	$(CC) $(C_FLAGS) $(SANIT) -c $< -o $@

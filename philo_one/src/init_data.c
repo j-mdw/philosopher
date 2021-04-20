@@ -27,10 +27,26 @@ static void
     {
         (shared_data->last_meal[i]).tv_sec = shared_data->start_time.tv_sec;
         (shared_data->last_meal[i]).tv_usec = shared_data->start_time.tv_usec;
-        // printf("%ld|%d|\n", shared_data->start_time.tv_sec, shared_data->start_time.tv_usec);
-        // printf("%ld|%d|\n", (shared_data->last_meal[i]).tv_sec, (shared_data->last_meal[i]).tv_usec);
         i++;
     }
+}
+
+static void
+    init_shared_data(t_philo_shared_data *shared_data, int ac, char **av)
+{
+    shared_data->nb_philo = philo_atoi(av[1]);
+    shared_data->nb_forks = shared_data->nb_philo;
+    shared_data->time_to_die = philo_atoi(av[2]) * 1000;
+    shared_data->time_to_eat = philo_atoi(av[3]) * 1000;
+    shared_data->time_to_sleep = philo_atoi(av[4]) * 1000;
+    shared_data->eat_count = NULL;
+    shared_data->mutex_arr = NULL;
+    shared_data->last_meal = NULL;
+    shared_data->death = 0;
+    if (ac == 6)
+        shared_data->max_eat = philo_atoi(av[5]);
+    else
+        shared_data->max_eat = -1;
 }
 
 int
@@ -38,18 +54,7 @@ int
 {
     int i;
 
-    shared_data->nb_philo = philo_atoi(av[1]);
-    shared_data->nb_forks = shared_data->nb_philo;
-    shared_data->time_to_die = philo_atoi(av[2]) * 1000;
-    shared_data->time_to_eat = philo_atoi(av[3]) * 1000;
-    shared_data->time_to_sleep = philo_atoi(av[4]) * 1000;
-    shared_data->mutex_arr = NULL;
-    shared_data->last_meal = NULL;
-
-    if (ac == 6)
-        shared_data->max_eat = philo_atoi(av[5]);
-    else
-        shared_data->max_eat = -1;
+    init_shared_data(shared_data, ac, av);
     if (pthread_mutex_init(&shared_data->print_mutex, NULL) != 0)
         return (clear_shared_data(shared_data, shared_data->nb_forks));
     if (!(shared_data->mutex_arr = (pthread_mutex_t *)malloc(
@@ -62,9 +67,12 @@ int
             return (clear_shared_data(shared_data, i));
         i++;
     }
-    if (!(shared_data->last_meal = malloc(sizeof(struct timeval) * shared_data->nb_philo)))
+    if (!(shared_data->last_meal = (struct timeval *)malloc(sizeof(struct timeval) * shared_data->nb_philo)))
         return (clear_shared_data(shared_data, shared_data->nb_forks));
     chrono_start(&shared_data->start_time);
     set_last_meal(shared_data);
+    if (!(shared_data->eat_count = (int *)malloc(sizeof(int) * shared_data->nb_philo)))
+        return (clear_shared_data(shared_data, shared_data->nb_forks));
+    memset(shared_data->eat_count, 0, shared_data->nb_philo * sizeof(int));
     return (1);
 }

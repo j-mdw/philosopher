@@ -6,10 +6,8 @@ int
     int err;
     if ((err = gettimeofday(timeval_s, NULL)) != 0)
     {
-        // printf("Error: %d\n", err);
         return (0);
     }
-    // printf("TOD: %ld|%d|\n", timeval_s->tv_sec, timeval_s->tv_usec);
     return (1);
 }
 
@@ -34,7 +32,6 @@ long long int
         return (-1);
     time0 = chrono_timeval_to_long(start_time);
     time1 = chrono_timeval_to_long(&tod);
-    // printf("Start time: %lld | Current time: %lld | diff: %lld\n", time0, time1, time1 - time0);    
     return (time1 - time0);
 }
 
@@ -44,7 +41,6 @@ int
     long long int   elapsed;
 
     elapsed = chrono_get_timeelapsed(start_time);
-    // printf("Elapsed: %lld\n", elapsed);
     if (elapsed > microsec)
         return (1);
     return (0);
