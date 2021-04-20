@@ -9,11 +9,17 @@ void
         "is sleeping",
         "is thinking",
         "died"};
+    static int death = 0;
 
-    pthread_mutex_lock(print_mutex);
-    printf("%d %d %s\n", time / 1000, id, state_arr[state]);
-    if (state != philo_dead)
-        pthread_mutex_unlock(print_mutex);
+    if (!death)
+    {
+        pthread_mutex_lock(print_mutex);
+        printf("%d %d %s\n", time / 1000, id, state_arr[state]);
+        if (state == philo_dead)
+            death = 1;
+        else
+            pthread_mutex_unlock(print_mutex);
+    }
 }
 
     

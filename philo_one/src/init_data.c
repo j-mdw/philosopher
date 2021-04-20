@@ -27,6 +27,8 @@ static void
     {
         (shared_data->last_meal[i]).tv_sec = shared_data->start_time.tv_sec;
         (shared_data->last_meal[i]).tv_usec = shared_data->start_time.tv_usec;
+        // printf("%ld|%d|\n", shared_data->start_time.tv_sec, shared_data->start_time.tv_usec);
+        // printf("%ld|%d|\n", (shared_data->last_meal[i]).tv_sec, (shared_data->last_meal[i]).tv_usec);
         i++;
     }
 }
@@ -61,6 +63,7 @@ int
         i++;
     }
     if (!(shared_data->last_meal = malloc(sizeof(struct timeval) * shared_data->nb_philo)))
+        return (clear_shared_data(shared_data, shared_data->nb_forks));
     chrono_start(&shared_data->start_time);
     set_last_meal(shared_data);
     return (1);

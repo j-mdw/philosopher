@@ -22,6 +22,7 @@ typedef struct	s_philo_shared_data {
 	int				time_to_eat;
 	int				time_to_sleep;
 	int				max_eat;
+	int				death;
 	struct timeval	*last_meal;
 	pthread_mutex_t	*mutex_arr;
 	pthread_mutex_t print_mutex;
@@ -50,4 +51,5 @@ int				chrono_start(struct timeval *timeval_s);
 long long int	chrono_get_timeelapsed(struct timeval *start_time);
 int				chrono_iselapsed(struct timeval *start_time, int microsec);
 void			chrono_timer(struct timeval *start_time, int timer);
+long long int	chrono_timeval_to_long(struct timeval *time);
 #endif

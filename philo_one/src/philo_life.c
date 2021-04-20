@@ -32,7 +32,7 @@ void
     philo_data_c = (t_philo_data *)philo_data;
     set_forks_index(philo_data_c->shared_data->nb_forks, philo_data_c->id, &fork_1, &fork_2);
     i = philo_data_c->shared_data->max_eat;
-    while (i)
+    while (i && !philo_data_c->shared_data->death)
     {
         pthread_mutex_lock(&philo_data_c->shared_data->mutex_arr[fork_1]);
         print_msg(&philo_data_c->shared_data->print_mutex, philo_fork,
@@ -40,6 +40,8 @@ void
             chrono_get_timeelapsed(&philo_data_c->shared_data->start_time));        
         pthread_mutex_lock(&philo_data_c->shared_data->mutex_arr[fork_2]);
         chrono_start(&time);
+        philo_data_c->shared_data->last_meal[philo_data_c->id - 1].tv_sec = time.tv_sec;
+        philo_data_c->shared_data->last_meal[philo_data_c->id - 1].tv_usec = time.tv_usec;        
         print_msg(&philo_data_c->shared_data->print_mutex, philo_fork, 
             philo_data_c->id,
             chrono_get_timeelapsed(&philo_data_c->shared_data->start_time));
