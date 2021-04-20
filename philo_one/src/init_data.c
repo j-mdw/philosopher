@@ -42,7 +42,8 @@ static void
     shared_data->eat_count = NULL;
     shared_data->mutex_arr = NULL;
     shared_data->last_meal = NULL;
-    shared_data->death = 0;
+    // shared_data->death = 0;
+    g_philo_death = 0;
     if (ac == 6)
         shared_data->max_eat = philo_atoi(av[5]);
     else

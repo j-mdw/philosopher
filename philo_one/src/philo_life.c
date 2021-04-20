@@ -39,10 +39,10 @@ void
             data->id,
             chrono_get_timeelapsed(&data->shared_data->start_time));        
         chrono_timer(time, data->shared_data->time_to_eat);
-
         pthread_mutex_unlock(&data->shared_data->mutex_arr[forks[0]]);
         pthread_mutex_unlock(&data->shared_data->mutex_arr[forks[1]]);
 }
+
 void
     *philo_life(void *philo_data)
 {
@@ -53,10 +53,10 @@ void
 
     data = (t_philo_data *)philo_data;
     if (data->id % 2)
-        usleep(data->shared_data->time_to_eat);
+        usleep(data->shared_data->time_to_eat - 1000);
     set_forks_index(data->shared_data->nb_forks, data->id, &forks[0], &forks[1]);
     i = data->shared_data->max_eat;
-    while (i && !data->shared_data->death)
+    while (i && !g_philo_death)
     {
         philo_eating(data, &time, forks);
         print_msg(&data->shared_data->print_mutex, philo_sleep, data->id,

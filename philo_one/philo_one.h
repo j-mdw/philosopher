@@ -8,6 +8,8 @@
 # include <sys/time.h>
 # include <string.h>
 
+int g_philo_death;
+
 typedef enum	e_print_msg {
 	philo_fork,
 	philo_eat,

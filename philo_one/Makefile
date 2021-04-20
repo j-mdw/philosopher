@@ -37,7 +37,8 @@ $(NAME): $(PONE_FILES_O)
 	#$(CC) $(SANIT) $(PTHREAD_LIB) $^ -o $@
 
 $(PONE_DIR_O)%.o: $(PONE_DIR_C)%.c $(H_FILE)
-	$(CC) $(C_FLAGS) $(SANIT) -c $< -o $@
+	$(CC) $(C_FLAGS) -c $< -o $@
+#$(CC) $(C_FLAGS) $(SANIT) -c $< -o $@
 
 clean:
 	$(RM) $(PONE_FILES_O)
