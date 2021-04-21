@@ -47,7 +47,7 @@ int			check_input(int ac, char **av);
 int			clear_shared_data(t_philo_shared_data *shared_data, int mutex_arr_len);
 int			philo_create(t_philo_shared_data *shared_data, int id);
 void		*philo_life(void *philo_data);
-
+void		my_usleep(int micro, long long int start_time);
 /*
 ** CHRONO
 */

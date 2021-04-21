@@ -49,9 +49,11 @@ int
 void
     chrono_timer(struct timeval *start_time, int timer)
 {
-    long long int time;
+    // long long int time;
+    // struct timeval current_time;
 
-    time = timer - chrono_get_timeelapsed(start_time);
-    if (time > 0)
-        usleep(time);
+    // chrono_start()
+    // time = timer - chrono_get_timeelapsed(start_time);
+    // if (time > 0)
+        my_usleep(timer, chrono_timeval_to_long(start_time));
 }

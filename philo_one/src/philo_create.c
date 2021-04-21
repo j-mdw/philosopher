@@ -10,7 +10,7 @@ int
     if (id > shared_data->nb_philo)
     {
         // while (!shared_data->death)
-        //     usleep(10000);
+        //     my_usleep(10000);
         return (0);
     }
     philo_data.id = id;
@@ -24,7 +24,7 @@ int
     // }
     // pthread_detach(philo_thread);
     // while (!shared_data->death)
-    //     usleep(5000);
+    //     my_usleep(5000);
     pthread_join(philo_thread, NULL);
     return (0);
 }

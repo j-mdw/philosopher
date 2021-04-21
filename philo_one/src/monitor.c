@@ -57,7 +57,7 @@ void
             // pthread_mutex_unlock(&data->print_mutex);
             return (NULL);
         }
-        usleep(100);
+        usleep(500);
     }
     return (NULL);
 }

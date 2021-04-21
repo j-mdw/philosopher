@@ -28,16 +28,16 @@ void
             data->id,
             chrono_get_timeelapsed(&data->shared_data->start_time));        
         pthread_mutex_lock(&data->shared_data->mutex_arr[forks[1]]);
-        chrono_start(time);       
+        chrono_start(time);
         data->shared_data->last_meal[data->id - 1].tv_sec = time->tv_sec;
-        data->shared_data->last_meal[data->id - 1].tv_usec = time->tv_usec;        
+        data->shared_data->last_meal[data->id - 1].tv_usec = time->tv_usec;
         data->shared_data->eat_count[data->id - 1]++;
-        print_msg(&data->shared_data->print_mutex, philo_fork, 
+        print_msg(&data->shared_data->print_mutex, philo_fork,
             data->id,
             chrono_get_timeelapsed(&data->shared_data->start_time));
-        print_msg(&data->shared_data->print_mutex, philo_eat, 
+        print_msg(&data->shared_data->print_mutex, philo_eat,
             data->id,
-            chrono_get_timeelapsed(&data->shared_data->start_time));        
+            chrono_get_timeelapsed(&data->shared_data->start_time));
         chrono_timer(time, data->shared_data->time_to_eat);
         pthread_mutex_unlock(&data->shared_data->mutex_arr[forks[0]]);
         pthread_mutex_unlock(&data->shared_data->mutex_arr[forks[1]]);
@@ -53,7 +53,7 @@ void
 
     data = (t_philo_data *)philo_data;
     if (data->id % 2)
-        usleep(data->shared_data->time_to_eat - 1000);
+        my_usleep(data->shared_data->time_to_eat / 2, chrono_timeval_to_long(&data->shared_data->start_time));
     set_forks_index(data->shared_data->nb_forks, data->id, &forks[0], &forks[1]);
     i = data->shared_data->max_eat;
     while (i && !g_philo_death)
@@ -61,7 +61,6 @@ void
         philo_eating(data, &time, forks);
         print_msg(&data->shared_data->print_mutex, philo_sleep, data->id,
         chrono_get_timeelapsed(&data->shared_data->start_time));
-
         chrono_timer(&time, data->shared_data->time_to_eat + data->shared_data->time_to_sleep);
         print_msg(&data->shared_data->print_mutex, philo_think, data->id,
         chrono_get_timeelapsed(&data->shared_data->start_time));
