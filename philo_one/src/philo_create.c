@@ -18,13 +18,7 @@ int
     if (pthread_create(&philo_thread, NULL, philo_life, &philo_data)) //Error management: should indicate to all process if an error occurs and they should all return!!
         return (-1);
     if (philo_create(shared_data, id + 1))
-    // {
-    //     pthread_detach(philo_thread);
         return (-1);
-    // }
-    // pthread_detach(philo_thread);
-    // while (!shared_data->death)
-    //     my_usleep(5000);
     pthread_join(philo_thread, NULL);
     return (0);
 }

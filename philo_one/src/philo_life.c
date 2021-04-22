@@ -68,6 +68,8 @@ void
         chrono_get_timeelapsed(&data->shared_data->start_time));
         if (i > 0)
             i--;
+        if (data->id % 2)
+            usleep(300);
     }
     return (NULL);
 }
