@@ -30,6 +30,7 @@ typedef struct	s_philo_shared_data {
 	struct timeval	*last_meal;
 	pthread_mutex_t	*mutex_arr;
 	pthread_mutex_t print_mutex;
+	pthread_mutex_t post_mutex;
 	struct timeval  start_time;
 }				t_philo_shared_data;
 

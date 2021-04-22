@@ -42,7 +42,6 @@ static void
     shared_data->eat_count = NULL;
     shared_data->mutex_arr = NULL;
     shared_data->last_meal = NULL;
-    // shared_data->death = 0;
     g_philo_death = 0;
     if (ac == 6)
         shared_data->max_eat = philo_atoi(av[5]);
@@ -57,6 +56,8 @@ int
 
     init_shared_data(shared_data, ac, av);
     if (pthread_mutex_init(&shared_data->print_mutex, NULL) != 0)
+        return (clear_shared_data(shared_data, shared_data->nb_forks));
+    if (pthread_mutex_init(&shared_data->post_mutex, NULL) != 0)
         return (clear_shared_data(shared_data, shared_data->nb_forks));
     if (!(shared_data->mutex_arr = (pthread_mutex_t *)malloc(
         sizeof(pthread_mutex_t) * shared_data->nb_forks)))

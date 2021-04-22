@@ -39,19 +39,8 @@ static int
     return (i);
 }
 
-// static int
-//     ft_strlen(char *s)
-// {
-//     int i;
-
-//     i = 0;
-//     while (s[i])
-//         i++;
-//     return (i);
-// }
-
 void
-    print_msg(pthread_mutex_t *print_mutex, int state, int id, int time)
+    print_msg(pthread_mutex_t *print_mutex, int state, int id, int time_micro)
 {
 
     char        print_arr[4096];
@@ -68,7 +57,7 @@ void
         pthread_mutex_lock(print_mutex);
         if (!g_philo_death || state == philo_dead)
         {
-            index = write_nbr(time , print_arr);
+            index = write_nbr(time_micro / 1000, print_arr);
             print_arr[index++] = ' ';
             index += write_nbr(id, &print_arr[index]);
             print_arr[index++] = ' ';
@@ -76,10 +65,7 @@ void
             write(1, print_arr, index);
             // printf("%d %d %s\n", time / 1000, id, state_arr[state]);
         }
-        // if (state == philo_dead)
-        //     death = 1;
-        // if (state != philo_dead)
-            pthread_mutex_unlock(print_mutex);
+        pthread_mutex_unlock(print_mutex);
     }
 }
 

@@ -16,6 +16,7 @@ int
         free(shared_data->mutex_arr);
     }
     pthread_mutex_destroy(&shared_data->print_mutex); //This could fail if it was not initialized, but should not cause a segfault
+    pthread_mutex_destroy(&shared_data->post_mutex);
     free(shared_data->last_meal);
     free(shared_data->eat_count);
     return (0);

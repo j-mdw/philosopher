@@ -23,24 +23,26 @@ void
 void
     philo_eating(t_philo_data *data, struct timeval *time, int *forks)
 {
-        pthread_mutex_lock(&data->shared_data->mutex_arr[forks[0]]);
-        print_msg(&data->shared_data->print_mutex, philo_fork,
-            data->id,
-            chrono_get_timeelapsed(&data->shared_data->start_time));        
-        pthread_mutex_lock(&data->shared_data->mutex_arr[forks[1]]);
-        chrono_start(time);
-        data->shared_data->last_meal[data->id - 1].tv_sec = time->tv_sec;
-        data->shared_data->last_meal[data->id - 1].tv_usec = time->tv_usec;
-        data->shared_data->eat_count[data->id - 1]++;
-        print_msg(&data->shared_data->print_mutex, philo_fork,
-            data->id,
-            chrono_get_timeelapsed(&data->shared_data->start_time));
-        print_msg(&data->shared_data->print_mutex, philo_eat,
-            data->id,
-            chrono_get_timeelapsed(&data->shared_data->start_time));
-        chrono_timer(time, data->shared_data->time_to_eat);
-        pthread_mutex_unlock(&data->shared_data->mutex_arr[forks[0]]);
-        pthread_mutex_unlock(&data->shared_data->mutex_arr[forks[1]]);
+    long long int time_elapsed;
+
+    pthread_mutex_lock(&data->shared_data->mutex_arr[forks[0]]);
+    print_msg(&data->shared_data->print_mutex, philo_fork, data->id,
+        chrono_get_timeelapsed(&data->shared_data->start_time));        
+    pthread_mutex_lock(&data->shared_data->mutex_arr[forks[1]]);
+    chrono_start(time);
+    time_elapsed = chrono_get_timeelapsed(&data->shared_data->start_time);
+    pthread_mutex_lock(&data->shared_data->post_mutex);
+    data->shared_data->last_meal[data->id - 1].tv_sec = time->tv_sec;
+    data->shared_data->last_meal[data->id - 1].tv_usec = time->tv_usec;
+    data->shared_data->eat_count[data->id - 1]++;
+    pthread_mutex_unlock(&data->shared_data->post_mutex);
+    print_msg(&data->shared_data->print_mutex, philo_fork, data->id,
+    time_elapsed);
+    print_msg(&data->shared_data->print_mutex, philo_eat, data->id,
+    time_elapsed);
+    chrono_timer(time, data->shared_data->time_to_eat);
+    pthread_mutex_unlock(&data->shared_data->mutex_arr[forks[0]]);
+    pthread_mutex_unlock(&data->shared_data->mutex_arr[forks[1]]);
 }
 
 void
