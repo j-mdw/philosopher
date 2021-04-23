@@ -1,22 +1,39 @@
 #include "philo_two.h"
 
-int
-    clear_shared_data(t_philo_shared_data *shared_data, int mutex_arr_len)
+static int
+    sem_clear(t_philo_shared_data *shared_data)
 {
-    int i;
+    int ret;
 
-    i = 0;
-    if (shared_data->mutex_arr)
+    ret = 0;
+    if (shared_data->forks_sem)
     {
-        while (i < mutex_arr_len)
-        {
-            pthread_mutex_destroy(&shared_data->mutex_arr[i]);
-            i++;
-        }
-        free(shared_data->mutex_arr);
+        sem_close(shared_data->forks_sem);
+        ret += sem_unlink(FORKS_SEM);
     }
-    pthread_mutex_destroy(&shared_data->print_mutex); //This could fail if it was not initialized, but should not cause a segfault
-    pthread_mutex_destroy(&shared_data->post_mutex);
+    if (shared_data->fork_grab_sem)
+    {
+        sem_close(shared_data->fork_grab_sem);
+        ret += sem_unlink(FROK_GRAB_SEM);
+    }
+    if (shared_data->post_sem)
+    {
+        sem_close(shared_data->post_sem);
+        ret += sem_unlink(POST_SEM);
+    }
+    if (shared_data->print_sem)
+    {
+        sem_close(shared_data->print_sem);
+        ret += sem_unlink(PRINT_SEM);
+    }
+    return (ret);
+}
+
+int
+    clear_shared_data(t_philo_shared_data *shared_data)
+{
+    if (sem_clear(shared_data) != 0)
+        printf("Error clearing semaphores\n");
     free(shared_data->last_meal);
     free(shared_data->eat_count);
     return (0);

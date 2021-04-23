@@ -8,11 +8,7 @@ int
     // int             ret;
 
     if (id > shared_data->nb_philo)
-    {
-        // while (!shared_data->death)
-        //     my_usleep(10000);
         return (0);
-    }
     philo_data.id = id;
     philo_data.shared_data = shared_data;
     if (pthread_create(&philo_thread, NULL, philo_life, &philo_data)) //Error management: should indicate to all process if an error occurs and they should all return!!

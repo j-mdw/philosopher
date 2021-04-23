@@ -43,7 +43,7 @@ void
     print_msg(pthread_mutex_t *print_mutex, int state, int id, int time_micro)
 {
 
-    char        print_arr[4096];
+    static char print_arr[4096];
     int         index;
     static char *state_arr[5] = {
         "has taken a fork\n",

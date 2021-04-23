@@ -18,18 +18,21 @@ static int
 static int
     check_death(t_philo_shared_data *data, int index)
 {
-    pthread_mutex_lock(&data->post_mutex);
+    sem_wait(data->post_sem);
+    // pthread_mutex_lock(&data->post_mutex);
     if (chrono_iselapsed(&data->last_meal[index], data->time_to_die) &&
     ((data->max_eat == -1) || (data->eat_count[index] < data->max_eat)))
     {
         g_philo_death = 1;
-        print_msg(&data->print_mutex, philo_dead, index + 1,
+        print_msg(data->print_sem, philo_dead, index + 1,
         chrono_timeval_to_long(&data->last_meal[index]) + data->time_to_die
         - chrono_timeval_to_long(&data->start_time));
-        pthread_mutex_unlock(&data->post_mutex);
+        sem_post(data->post_sem);
+        // pthread_mutex_unlock(&data->post_mutex);
         return (1);
     }
-    pthread_mutex_unlock(&data->post_mutex);
+    sem_post(data->post_sem);
+    // pthread_mutex_unlock(&data->post_mutex);
     return (0);
 }
 
