@@ -15,6 +15,10 @@
 # define PRINT_SEM "/print_sem"
 # define SEM_MOD 664
 
+# ifndef O_CREAT
+#  define O_CREAT 0x0200
+# endif
+
 int g_philo_death;
 
 typedef enum	e_print_msg {
