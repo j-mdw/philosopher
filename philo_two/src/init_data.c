@@ -43,8 +43,8 @@ static void
     shared_data->fork_grab_sem = NULL;
     shared_data->post_sem = NULL;
     shared_data->print_sem = NULL;
-
     shared_data->last_meal = NULL;
+    shared_data->eat_count = NULL;
 
     g_philo_death = 0;
     if (ac == 6)
@@ -57,6 +57,7 @@ int
     init_data(t_philo_shared_data *shared_data, int ac, char **av)
 {
     init_shared_data(shared_data, ac, av);
+    printf("Befor sem_init\n");
     if ((shared_data->forks_sem = sem_open(FORKS_SEM, O_CREAT, SEM_MOD, shared_data->nb_forks)) == SEM_FAILED)
         return (clear_shared_data(shared_data));
     if ((shared_data->fork_grab_sem = sem_open(FROK_GRAB_SEM, O_CREAT, SEM_MOD, 1)) == SEM_FAILED)

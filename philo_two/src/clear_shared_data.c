@@ -26,6 +26,7 @@ static int
         sem_close(shared_data->print_sem);
         ret += sem_unlink(PRINT_SEM);
     }
+    printf("Sem unlink ret: %d\n", ret);
     return (ret);
 }
 

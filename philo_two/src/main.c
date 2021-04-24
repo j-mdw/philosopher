@@ -11,8 +11,10 @@ int
         printf("Wrong input\n");
         return (EXIT_FAILURE);
     }
-    if (!init_data(&shared_data, ac, av))
+	printf("Bef init");
+if (!init_data(&shared_data, ac, av))
         return (EXIT_FAILURE);
+	printf("AFT init");
     if (pthread_create(&monitor_th, NULL, monitor_death, &shared_data))
         return (clear_shared_data(&shared_data) + 1);
     if (philo_create(&shared_data, 1))

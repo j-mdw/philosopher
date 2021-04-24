@@ -23,7 +23,7 @@ CC = gcc
 
 C_FLAGS = -Wall -Wextra -Werror $I
 
-SANIT = -g3 -fsanitize=address
+SANIT = -g -fsanitize=address
 
 PTHREAD_LIB = -pthread
 
