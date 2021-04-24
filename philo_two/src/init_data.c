@@ -58,17 +58,24 @@ static sem_t
 {
     sem_t   *sem;
 
+    errno = 0;
     if ((sem = sem_open(name, O_CREAT | O_EXCL, SEM_MOD, size)) != SEM_FAILED)
         return (sem);
+    // while (sem == SEM_FAILED) {
+        // errno = 0;
     sem_unlink(name);
-    if ((sem = sem_open(name, O_CREAT | O_EXCL, SEM_MOD, size)) != SEM_FAILED)
+
+        // errno = 0;
+    if ((sem = sem_open(name, O_CREAT, SEM_MOD, size)) != SEM_FAILED)
         return (sem);
-    return (0);
+    printf("Errno: %d - open_check: %s\n",errno , strerror(errno));
+    return (NULL);
 }
 
 int
     init_data(t_philo_shared_data *shared_data, int ac, char **av)
 {
+    errno = 0; //DELETE
     init_shared_data(shared_data, ac, av);
     if (!(shared_data->forks_sem = sem_open_check(FORKS_SEM, shared_data->nb_forks)))
         return (clear_shared_data(shared_data));

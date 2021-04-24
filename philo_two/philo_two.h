@@ -6,8 +6,11 @@
 # include <unistd.h>
 # include <stdio.h>
 # include <sys/time.h>
+# include <sys/stat.h>
+# include <fcntl.h>
 # include <string.h>
 # include <semaphore.h>
+# include <errno.h> //TO DELETE
 
 # define FORKS_SEM "/forks_sem"
 # define FROK_GRAB_SEM "/fork_grab"
@@ -17,6 +20,10 @@
 
 # ifndef O_CREAT
 #  define O_CREAT 0x0200
+# endif
+
+# ifndef O_EXCL
+#  define O_EXCL 0x0800
 # endif
 
 int g_philo_death;
