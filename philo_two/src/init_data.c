@@ -53,21 +53,48 @@ static void
         shared_data->max_eat = -1;
 }
 
+static sem_t
+    *sem_open_check(char *name, int size)
+{
+    sem_t   *sem;
+
+    if ((sem = sem_open(name, O_CREAT | O_EXCL, SEM_MOD, size)) != SEM_FAILED)
+        return (sem);
+    sem_unlink(name);
+    if ((sem = sem_open(name, O_CREAT | O_EXCL, SEM_MOD, size)) != SEM_FAILED)
+        return (sem);
+    return (0);
+}
+
 int
     init_data(t_philo_shared_data *shared_data, int ac, char **av)
 {
     init_shared_data(shared_data, ac, av);
-    printf("Befor sem_init\n");
-    if ((shared_data->forks_sem = sem_open(FORKS_SEM, O_CREAT, SEM_MOD, shared_data->nb_forks)) == SEM_FAILED)
+    if (!(shared_data->forks_sem = sem_open_check(FORKS_SEM, shared_data->nb_forks)))
         return (clear_shared_data(shared_data));
-    if ((shared_data->fork_grab_sem = sem_open(FROK_GRAB_SEM, O_CREAT, SEM_MOD, 1)) == SEM_FAILED)
+    if (!(shared_data->fork_grab_sem = sem_open_check(FROK_GRAB_SEM, 1)))
         return (clear_shared_data(shared_data));
-    if ((shared_data->post_sem = sem_open(POST_SEM, O_CREAT, SEM_MOD, 1)) == SEM_FAILED)
+    if (!(shared_data->post_sem = sem_open_check(POST_SEM, 1)))
         return (clear_shared_data(shared_data));
-    if ((shared_data->print_sem = sem_open(PRINT_SEM, O_CREAT, SEM_MOD, 1)) == SEM_FAILED)
+    if (!(shared_data->print_sem = sem_open_check(PRINT_SEM, 1)))
         return (clear_shared_data(shared_data));
+
+
+    // if ((shared_data->forks_sem = sem_open(FORKS_SEM, O_CREAT, SEM_MOD, shared_data->nb_forks)) == SEM_FAILED) sem_open_check())
+    //     return (clear_shared_data(shared_data));
+    // printf("Sem_init\n");
+    // if ((shared_data->fork_grab_sem = sem_open(FROK_GRAB_SEM, O_CREAT, SEM_MOD, 1)) == SEM_FAILED) sem_open_check())
+    //     return (clear_shared_data(shared_data));
+    // printf("Sem_init\n");
+    // if ((shared_data->post_sem = sem_open(POST_SEM, O_CREAT, SEM_MOD, 1)) == SEM_FAILED) sem_open_check())
+    //     return (clear_shared_data(shared_data));
+    // printf("Sem_init\n");
+    // if ((shared_data->print_sem = sem_open(PRINT_SEM, O_CREAT, SEM_MOD, 1)) == SEM_FAILED) sem_open_check())
+    //     return (clear_shared_data(shared_data));
+    // printf("Sem_init\n");
     if (!(shared_data->last_meal = (struct timeval *)malloc(sizeof(struct timeval) * shared_data->nb_philo)))
         return (clear_shared_data(shared_data));
+    printf("Sem_init\n");
     chrono_start(&shared_data->start_time);
     set_first_meal(shared_data);
     if (!(shared_data->eat_count = (int *)malloc(sizeof(int) * shared_data->nb_philo)))

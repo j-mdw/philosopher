@@ -13,7 +13,7 @@
 # define FROK_GRAB_SEM "/fork_grab"
 # define POST_SEM "/post_sem"
 # define PRINT_SEM "/print_sem"
-# define SEM_MOD 664
+# define SEM_MOD 0644
 
 # ifndef O_CREAT
 #  define O_CREAT 0x0200
@@ -60,6 +60,7 @@ int			check_input(int ac, char **av);
 int			philo_create(t_philo_shared_data *shared_data, int id);
 void		*philo_life(void *philo_data);
 void		my_usleep(int micro, long long int start_time);
+
 /*
 ** CHRONO
 */
@@ -69,4 +70,5 @@ long long int	chrono_get_timeelapsed(struct timeval *start_time);
 int				chrono_iselapsed(struct timeval *start_time, int microsec);
 void			chrono_timer(struct timeval *start_time, int timer);
 long long int	chrono_timeval_to_long(struct timeval *time);
+
 #endif
