@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo_two.h                                        :+:      :+:    :+:   */
+/*   philo_three.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmaydew <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PHILO_TWO_H
-# define PHILO_TWO_H
+#ifndef PHILO_THREE_H
+# define PHILO_THREE_H
 
 # include <stdlib.h>
 # include <pthread.h>
@@ -22,6 +22,7 @@
 # include <fcntl.h>
 # include <string.h>
 # include <semaphore.h>
+# include <signal.h>
 
 # define FORKS_SEM "/forks_sem"
 # define FROK_GRAB_SEM "/fork_grab"
@@ -29,7 +30,7 @@
 # define PRINT_SEM "/print_sem"
 # define SEM_MOD 0644
 
-int g_philo_death;
+// int g_philo_death;
 
 typedef enum	e_print_msg {
 	philo_fork,
@@ -40,14 +41,14 @@ typedef enum	e_print_msg {
 }				t_print_msg;
 
 typedef struct	s_philo_shared_data {
-	int				*eat_count;
+	int				eat_count;
 	int				nb_philo;
 	int				nb_forks;
 	int				time_to_die;
 	int				time_to_eat;
 	int				time_to_sleep;
 	int				max_eat;
-	struct timeval	*last_meal;
+	struct timeval	last_meal; //Stoped here, to be continued...
 	sem_t			*forks_sem;
 	sem_t			*fork_grab_sem;
 	sem_t			*print_sem;
