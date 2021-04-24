@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   philo_two.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jmaydew <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/04/24 18:12:47 by jmaydew           #+#    #+#             */
+/*   Updated: 2021/04/24 18:12:48 by jmaydew          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef PHILO_TWO_H
 # define PHILO_TWO_H
 
@@ -10,7 +22,6 @@
 # include <fcntl.h>
 # include <string.h>
 # include <semaphore.h>
-# include <errno.h> //TO DELETE
 
 # define FORKS_SEM "/forks_sem"
 # define FROK_GRAB_SEM "/fork_grab"
@@ -32,7 +43,7 @@ typedef enum	e_print_msg {
 	philo_fork,
 	philo_eat,
 	philo_sleep,
-	philo_think, 
+	philo_think,
 	philo_dead
 }				t_print_msg;
 
@@ -49,8 +60,8 @@ typedef struct	s_philo_shared_data {
 	sem_t			*forks_sem;
 	sem_t			*fork_grab_sem;
 	sem_t			*print_sem;
-	sem_t		 	*post_sem;
-	struct timeval  start_time;
+	sem_t			*post_sem;
+	struct timeval	start_time;
 }				t_philo_shared_data;
 
 typedef struct	s_philo_data {
@@ -59,14 +70,14 @@ typedef struct	s_philo_data {
 	t_philo_shared_data *shared_data;
 }				t_philo_data;
 
-int			clear_shared_data(t_philo_shared_data *shared_data);
-void		*monitor_death(void *shared_data);
-int			init_data(t_philo_shared_data *shared_data, int ac, char **av);
-void		print_msg(sem_t *print_mutex, int state, int id, int time);
-int			check_input(int ac, char **av);
-int			philo_create(t_philo_shared_data *shared_data, int id);
-void		*philo_life(void *philo_data);
-void		my_usleep(int micro, long long int start_time);
+int				clear_shared_data(t_philo_shared_data *shared_data);
+void			*monitor_death(void *shared_data);
+int				init_data(t_philo_shared_data *shared_data, int ac, char **av);
+void			print_msg(sem_t *print_mutex, int state, int id, int time);
+int				check_input(int ac, char **av);
+int				philo_create(t_philo_shared_data *shared_data, int id);
+void			*philo_life(void *philo_data);
+void			my_usleep(int micro, long long int start_time);
 
 /*
 ** CHRONO
