@@ -6,7 +6,7 @@
 /*   By: jmaydew <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/24 18:10:15 by jmaydew           #+#    #+#             */
-/*   Updated: 2021/04/24 18:21:19 by jmaydew          ###   ########.fr       */
+/*   Updated: 2021/04/25 22:32:20 by jmaydew          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ void
 {
 	sem_close(data->shared_data->post_sem);
 	sem_unlink(data->msg);
-	kill(0, SIGTERM);
+	//kill(0, SIGTERM);
+	exit(0);
 }
 
 static int
@@ -62,7 +63,7 @@ void
 	{
 		if (check_death(data->shared_data, data->id))
 			terminate_process(data);
-		if (data->shared_data->max_eat != -1 && 
+		if (data->shared_data->max_eat != -1 &&
 		data->shared_data->eat_count == data->shared_data->max_eat)
 			terminate_process(data);
 		usleep(data->shared_data->time_to_die / 10);

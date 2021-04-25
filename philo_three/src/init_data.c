@@ -6,7 +6,7 @@
 /*   By: jmaydew <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/24 18:10:15 by jmaydew           #+#    #+#             */
-/*   Updated: 2021/04/24 18:18:28 by jmaydew          ###   ########.fr       */
+/*   Updated: 2021/04/25 22:01:06 by jmaydew          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static void
 	set_first_meal(t_philo_shared_data *shared_data)
 {
 	shared_data->last_meal.tv_sec = shared_data->start_time.tv_sec;
-	shared_data->last_meal.tv_usec =shared_data->last_meal.tv_usec;
+	shared_data->last_meal.tv_usec =shared_data->start_time.tv_usec;
 }
 
 static void

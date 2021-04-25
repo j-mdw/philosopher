@@ -110,6 +110,7 @@ int
 	i = data->shared_data->max_eat;
 	while (i)
 	{
+		printf("Loop: %d\n", data->id);
 		philo_eating(data, &time);
 		print_msg(data->shared_data->print_sem, philo_sleep, data->id,
 		chrono_get_timeelapsed(&data->shared_data->start_time));
