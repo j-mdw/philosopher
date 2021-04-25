@@ -26,9 +26,9 @@ void
 	chrono_start(time);
 	time_elapsed = chrono_get_timeelapsed(&data->shared_data->start_time);
 	sem_wait(data->shared_data->post_sem);
-	data->shared_data->last_meal[data->id - 1].tv_sec = time->tv_sec;
-	data->shared_data->last_meal[data->id - 1].tv_usec = time->tv_usec;
-	data->shared_data->eat_count[data->id - 1]++;
+	data->shared_data->last_meal.tv_sec = time->tv_sec;
+	data->shared_data->last_meal.tv_usec = time->tv_usec;
+	data->shared_data->eat_count++;
 	sem_post(data->shared_data->post_sem);
 	print_msg(data->shared_data->print_sem, philo_fork, data->id,
 	time_elapsed);
@@ -38,20 +38,67 @@ void
 	sem_post(data->shared_data->forks_sem);
 	sem_post(data->shared_data->forks_sem);
 }
-
-void
-	*philo_life(void *philo_data)
+static int
+	cpy_nbr(unsigned int val, char *arr)
 {
-	struct timeval	time;
-	t_philo_data	*data;
-	int				i;
+	int i;
+	int deci_level;
+	int cpy;
 
-	data = (t_philo_data *)philo_data;
+	deci_level = 1;
+	cpy = val;
+	while (cpy /= 10)
+		deci_level *= 10;
+	i = 0;
+	while (deci_level)
+	{
+		arr[i] = (val / deci_level) + '0';
+		i++;
+		val %= deci_level;
+		deci_level /= 10;
+	}
+	return (i);
+}
+
+static int
+	philo_sem_open(t_philo_shared_data *data, char *name)
+{
+	if ((data->forks_sem = sem_open(FORKS_SEM, O_CREAT)) == SEM_FAILED)
+		return (0);
+	if ((data->forks_sem = sem_open(FROK_GRAB_SEM, O_CREAT)) == SEM_FAILED)
+		return (0);
+	if ((data->forks_sem = sem_open(PRINT_SEM, O_CREAT)) == SEM_FAILED)
+		return (0);
+	if ((data->post_sem = sem_open(name, O_CREAT | O_EXCL, SEM_MOD, 1)) != SEM_FAILED)
+		return (1);
+	sem_unlink(name);
+	if ((data->post_sem = sem_open(name, O_CREAT, SEM_MOD, 1)) != SEM_FAILED) /// NEED TO CLOSE AND UNLINK WITHIN THIS PROCESS!!!
+		return (1);
+	return (0);
+}
+
+int
+	philo_life(t_philo_data *data)
+{
+	pthread_t		monitor_th;
+	struct timeval	time;
+	int				i;
+	char			sem_name[4096];
+
+	i = ft_strcpy(POST_SEM, sem_name);
+	i += cpy_nbr(data->id, &sem_name[i]);
+	sem_name[i] = 0;
+	data->msg = sem_name;
+	if (!philo_sem_open(data->shared_data, sem_name))
+		return (-1);
+	if ((pthread_create(&monitor_th, NULL, monitor_death, data) != 0))
+		return (-1);
+	pthread_detach(monitor_th);
 	if (data->id % 2)
 		my_usleep(data->shared_data->time_to_eat / 2,
 		chrono_timeval_to_long(&data->shared_data->start_time));
 	i = data->shared_data->max_eat;
-	while (i && !g_philo_death)
+	while (i)
 	{
 		philo_eating(data, &time);
 		print_msg(data->shared_data->print_sem, philo_sleep, data->id,
@@ -65,5 +112,5 @@ void
 		if (data->id % 2)
 			usleep(300);
 	}
-	return (NULL);
+	return (0);
 }

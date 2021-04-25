@@ -16,7 +16,7 @@ int
 	main(int ac, char **av)
 {
 	t_philo_shared_data shared_data;
-	pthread_t			monitor_th;
+	// pthread_t			monitor_th;
 
 	if (!check_input(ac, av))
 	{
@@ -29,10 +29,10 @@ int
 	{	printf("Not enough philosophers\n");
 		return (EXIT_FAILURE);
 	}
-	if (pthread_create(&monitor_th, NULL, monitor_death, &shared_data))
-		return (clear_shared_data(&shared_data) + 1);
+	// if (pthread_create(&monitor_th, NULL, monitor_death, &shared_data))
+	// 	return (clear_shared_data(&shared_data) + 1);
 	if (philo_create(&shared_data, 1))
 		return (clear_shared_data(&shared_data) + 1);
-	pthread_join(monitor_th, NULL);
+	// pthread_join(monitor_th, NULL);
 	return (clear_shared_data(&shared_data));
 }

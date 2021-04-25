@@ -34,21 +34,6 @@ static int
 	return (i);
 }
 
-static int
-	ft_strcpy(char *src, char *cpy)
-{
-	int i;
-
-	i = 0;
-	while (src[i])
-	{
-		cpy[i] = src[i];
-		i++;
-	}
-	cpy[i] = 0;
-	return (i);
-}
-
 void
 	print_msg(pthread_mutex_t *print_mutex, int state, int id, int time_micro)
 {

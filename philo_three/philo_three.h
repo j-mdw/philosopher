@@ -48,7 +48,7 @@ typedef struct	s_philo_shared_data {
 	int				time_to_eat;
 	int				time_to_sleep;
 	int				max_eat;
-	struct timeval	last_meal; //Stoped here, to be continued...
+	struct timeval	last_meal;
 	sem_t			*forks_sem;
 	sem_t			*fork_grab_sem;
 	sem_t			*print_sem;
@@ -58,7 +58,7 @@ typedef struct	s_philo_shared_data {
 
 typedef struct	s_philo_data {
 	int					id;
-	int					msg;
+	char				*msg;
 	t_philo_shared_data *shared_data;
 }				t_philo_data;
 
@@ -68,8 +68,9 @@ int				init_data(t_philo_shared_data *shared_data, int ac, char **av);
 void			print_msg(sem_t *print_mutex, int state, int id, int time);
 int				check_input(int ac, char **av);
 int				philo_create(t_philo_shared_data *shared_data, int id);
-void			*philo_life(void *philo_data);
+int				philo_life(t_philo_data *data);
 void			my_usleep(int micro, long long int start_time);
+int				ft_strcpy(char *src, char *cpy);
 
 /*
 ** CHRONO

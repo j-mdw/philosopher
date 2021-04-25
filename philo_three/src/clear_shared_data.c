@@ -46,7 +46,5 @@ int
 {
 	if (sem_clear(shared_data) != 0)
 		printf("Error clearing semaphores\n");
-	free(shared_data->last_meal);
-	free(shared_data->eat_count);
 	return (0);
 }

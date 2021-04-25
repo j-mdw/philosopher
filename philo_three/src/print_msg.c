@@ -34,21 +34,6 @@ static int
 	return (i);
 }
 
-static int
-	ft_strcpy(char *src, char *cpy)
-{
-	int i;
-
-	i = 0;
-	while (src[i])
-	{
-		cpy[i] = src[i];
-		i++;
-	}
-	cpy[i] = 0;
-	return (i);
-}
-
 void
 	print_msg(sem_t *print_sem, int state, int id, int time_micro)
 {
@@ -61,18 +46,19 @@ void
 		"is thinking\n",
 		"died\n"};
 
-	if (!g_philo_death || state == philo_dead)
-	{
+	// if (!g_philo_death || state == philo_dead)
+	// {
 		sem_wait(print_sem);
-		if (!g_philo_death || state == philo_dead)
-		{
+		// if (!g_philo_death || state == philo_dead)
+		// {
 			index = cpy_nbr(time_micro / 1000, print_arr);
 			print_arr[index++] = ' ';
 			index += cpy_nbr(id, &print_arr[index]);
 			print_arr[index++] = ' ';
 			index += ft_strcpy(state_arr[state], &print_arr[index]);
 			write(1, print_arr, index);
-		}
-		sem_post(print_sem);
-	}
+		// }
+		if (!(state == philo_dead))
+			sem_post(print_sem);
+	// }
 }
