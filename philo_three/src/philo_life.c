@@ -17,8 +17,11 @@ void
 {
 	long long int time_elapsed;
 
+	// printf("Philo eat start\n");
 	sem_wait(data->shared_data->fork_grab_sem);
+	// printf("Philo eat grab sem\n");
 	sem_wait(data->shared_data->forks_sem);
+	// printf("Philo eat grab fork 1\n");
 	print_msg(data->shared_data->print_sem, philo_fork, data->id,
 		chrono_get_timeelapsed(&data->shared_data->start_time));
 	sem_wait(data->shared_data->forks_sem);
@@ -63,12 +66,15 @@ static int
 static int
 	philo_sem_open(t_philo_shared_data *data, char *name)
 {
-	if ((data->forks_sem = sem_open(FORKS_SEM, O_CREAT)) == SEM_FAILED)
+	// printf("bef start\n");
+	if ((data->forks_sem = sem_open(FORKS_SEM, 0)) == SEM_FAILED)
 		return (0);
-	if ((data->forks_sem = sem_open(FROK_GRAB_SEM, O_CREAT)) == SEM_FAILED)
+	// printf("1 OK \n");
+	if ((data->fork_grab_sem = sem_open(FROK_GRAB_SEM, 0)) == SEM_FAILED)
 		return (0);
-	if ((data->forks_sem = sem_open(PRINT_SEM, O_CREAT)) == SEM_FAILED)
+	if ((data->print_sem = sem_open(PRINT_SEM, 0)) == SEM_FAILED)
 		return (0);
+	// printf("OK before last\n");
 	if ((data->post_sem = sem_open(name, O_CREAT | O_EXCL, SEM_MOD, 1)) != SEM_FAILED)
 		return (1);
 	sem_unlink(name);
@@ -76,7 +82,7 @@ static int
 		return (1);
 	return (0);
 }
-
+#include <errno.h>
 int
 	philo_life(t_philo_data *data)
 {
@@ -89,11 +95,15 @@ int
 	i += cpy_nbr(data->id, &sem_name[i]);
 	sem_name[i] = 0;
 	data->msg = sem_name;
+	errno = 0; //TBD
 	if (!philo_sem_open(data->shared_data, sem_name))
+	// {perror("Sem open");
 		return (-1);
+	// printf("Sem open ok\n");
 	if ((pthread_create(&monitor_th, NULL, monitor_death, data) != 0))
 		return (-1);
 	pthread_detach(monitor_th);
+	// printf("Pthread create & detach ok\n");
 	if (data->id % 2)
 		my_usleep(data->shared_data->time_to_eat / 2,
 		chrono_timeval_to_long(&data->shared_data->start_time));

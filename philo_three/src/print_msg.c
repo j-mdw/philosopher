@@ -58,7 +58,7 @@ void
 			index += ft_strcpy(state_arr[state], &print_arr[index]);
 			write(1, print_arr, index);
 		// }
-		if (!(state == philo_dead))
+		if (state != philo_dead)
 			sem_post(print_sem);
 	// }
 }

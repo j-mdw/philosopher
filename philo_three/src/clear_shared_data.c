@@ -28,11 +28,11 @@ static int
 		sem_close(shared_data->fork_grab_sem);
 		ret += sem_unlink(FROK_GRAB_SEM);
 	}
-	if (shared_data->post_sem)
-	{
-		sem_close(shared_data->post_sem);
-		ret += sem_unlink(POST_SEM);
-	}
+	// if (shared_data->post_sem)
+	// {
+	// 	sem_close(shared_data->post_sem);
+	// 	ret += sem_unlink(POST_SEM);
+	// }
 	if (shared_data->print_sem)
 	{
 		sem_close(shared_data->print_sem);

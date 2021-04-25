@@ -77,8 +77,8 @@ int
 		return (clear_shared_data(shared_data));
 	if (!(shared_data->fork_grab_sem = sem_open_check(FROK_GRAB_SEM, 1)))
 		return (clear_shared_data(shared_data));
-	if (!(shared_data->post_sem = sem_open_check(POST_SEM, 1)))
-		return (clear_shared_data(shared_data));
+	// if (!(shared_data->post_sem = sem_open_check(POST_SEM, 1)))
+	// 	return (clear_shared_data(shared_data));
 	if (!(shared_data->print_sem = sem_open_check(PRINT_SEM, 1)))
 		return (clear_shared_data(shared_data));
 

@@ -9,7 +9,7 @@ PHILO_DIR_O = obj/
 PHILO_FILES_C =	main.c print_msg.c check_input.c \
 				chrono.c init_data.c philo_create.c \
 				philo_life.c clear_shared_data.c monitor.c \
-				my_usleep.c ft_strcpy
+				my_usleep.c ft_strcpy.c
 
 PHILO_FILES_O = $(addprefix $(PHILO_DIR_O), $(PHILO_FILES_C:c=o))
 
