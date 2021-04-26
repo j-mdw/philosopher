@@ -12,7 +12,7 @@
 
 #include "philo_three.h"
 
-void
+int
 	philo_eating(t_philo_data *data, struct timeval *time)
 {
 	long long int time_elapsed;
@@ -21,7 +21,7 @@ void
 	sem_wait(data->shared_data->forks_sem);
 	if (!print_msg(data->shared_data->print_sem, philo_fork, data->id,
 		chrono_get_timeelapsed(&data->shared_data->start_time)))
-		terminate_process(data);
+		return (0);
 	sem_wait(data->shared_data->forks_sem);
 	sem_post(data->shared_data->fork_grab_sem);
 	chrono_start(time);
@@ -33,15 +33,16 @@ void
 	sem_post(data->shared_data->post_sem);
 	if (!print_msg(data->shared_data->print_sem, philo_fork, data->id,
 	time_elapsed))
-		terminate_process(data);
+		return (0);
 	if (!print_msg(data->shared_data->print_sem, philo_eat, data->id,
 	time_elapsed))
-		terminate_process(data);
+		return (0);
 	chrono_timer(time, data->shared_data->time_to_eat);
 	sem_post(data->shared_data->forks_sem);
 	sem_post(data->shared_data->forks_sem);
 	if (data->shared_data->eat_count == data->shared_data->max_eat)
-		terminate_process(data);
+		return (0);
+	return (1);
 }
 
 static int
@@ -107,21 +108,26 @@ int
 	i = data->shared_data->max_eat;
 	while (i)
 	{
-		philo_eating(data, &time);
+		if (!philo_eating(data, &time))
+			break ;
 		if (!print_msg(data->shared_data->print_sem, philo_sleep, data->id,
 		chrono_get_timeelapsed(&data->shared_data->start_time)))
-			terminate_process(data);
+			break ;
 		chrono_timer(&time, data->shared_data->time_to_eat +
 		data->shared_data->time_to_sleep);
 		if (!print_msg(data->shared_data->print_sem, philo_think, data->id,
 		chrono_get_timeelapsed(&data->shared_data->start_time)))
-			terminate_process(data);
+			break ;
 		if (i > 0)
 			i--;
 		if (data->id % 2)
 			usleep(300);
 	}
-	pthread_join(monitor_th, NULL);
+	printf("Clean exit %d\n", data->id);
+	if (pthread_join(monitor_th, NULL))
+		printf("Join error: %d\n", data->id);
+	else
+		printf("Thread join success: %d\n", data->id);
 	terminate_process(data);
 	return (0);
 }
