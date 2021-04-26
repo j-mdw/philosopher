@@ -28,17 +28,14 @@ int
 	if ((child = fork()) < 0)
 		return (-1);
 	if (child == 0)
+	// {
 		philo_life(&philo_data);
+		// return (0);
+	// }
 	else
 	{
 		philo_create(shared_data, id + 1);
 		waitpid(child, &wstatus, 0);
 	}
 	return (0);
-	// if (pthread_create(&philo_thread, NULL, philo_life, &philo_data))
-	// 	return (-1);
-	// if (philo_create(shared_data, id + 1))
-	// 	return (-1);
-	// pthread_join(philo_thread, NULL);
-	// return (0);
 }

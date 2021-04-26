@@ -34,7 +34,7 @@ static int
 	return (i);
 }
 
-void
+int
 	print_msg(sem_t *print_sem, int state, int id, int time_micro)
 {
 	static char print_arr[4096];
@@ -48,7 +48,10 @@ void
 
 	// if (!g_philo_death || state == philo_dead)
 	// {
-		sem_wait(print_sem);
+		if (sem_wait(print_sem) != 0)
+			return (0);
+		if (state == philo_dead)
+			sem_unlink(PRINT_SEM);
 		// if (!g_philo_death || state == philo_dead)
 		// {
 			index = cpy_nbr(time_micro / 1000, print_arr);
@@ -60,5 +63,6 @@ void
 		// }
 		if (state != philo_dead)
 			sem_post(print_sem);
+		return (1);
 	// }
 }

@@ -67,13 +67,13 @@ typedef struct	s_philo_data {
 int				clear_shared_data(t_philo_shared_data *shared_data);
 void			*monitor_death(void *shared_data);
 int				init_data(t_philo_shared_data *shared_data, int ac, char **av);
-void			print_msg(sem_t *print_mutex, int state, int id, int time);
+int				print_msg(sem_t *print_mutex, int state, int id, int time);
 int				check_input(int ac, char **av);
 int				philo_create(t_philo_shared_data *shared_data, int id);
 int				philo_life(t_philo_data *data);
 void			my_usleep(int micro, long long int start_time);
 int				ft_strcpy(char *src, char *cpy);
-
+void			terminate_process(t_philo_data *data);
 /*
 ** CHRONO
 */

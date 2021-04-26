@@ -12,34 +12,11 @@
 
 #include "philo_three.h"
 
-// static int
-// 	all_done(int *eat_count, int max_eat, int len)
-// {
-// 	int i;
-
-// 	i = 0;
-// 	while (i < len)
-// 	{
-// 		if (eat_count[i] < max_eat)
-// 			return (0);
-// 		i++;
-// 	}
-// 	return (1);
-// }
-
-void
-	terminate_process(t_philo_data *data)
-{
-	sem_close(data->shared_data->post_sem);
-	sem_unlink(data->msg);
-	//kill(0, SIGTERM);
-	exit(0);
-}
-
 static int
 	check_death(t_philo_shared_data *data, int id)
 {
 	sem_wait(data->post_sem);
+	// printf("%lld|%d\n", chrono_timeval_to_long(&data->last_meal), data->time_to_die);
 	if (chrono_iselapsed(&data->last_meal, data->time_to_die) &&
 	((data->max_eat == -1) || (data->eat_count < data->max_eat)))
 	{

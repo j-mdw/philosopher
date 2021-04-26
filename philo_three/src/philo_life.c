@@ -22,8 +22,9 @@ void
 	// printf("Philo eat grab sem\n");
 	sem_wait(data->shared_data->forks_sem);
 	// printf("Philo eat grab fork 1\n");
-	print_msg(data->shared_data->print_sem, philo_fork, data->id,
-		chrono_get_timeelapsed(&data->shared_data->start_time));
+	if (!print_msg(data->shared_data->print_sem, philo_fork, data->id,
+		chrono_get_timeelapsed(&data->shared_data->start_time)))
+		terminate_process(data);
 	sem_wait(data->shared_data->forks_sem);
 	sem_post(data->shared_data->fork_grab_sem);
 	chrono_start(time);
@@ -33,10 +34,12 @@ void
 	data->shared_data->last_meal.tv_usec = time->tv_usec;
 	data->shared_data->eat_count++;
 	sem_post(data->shared_data->post_sem);
-	print_msg(data->shared_data->print_sem, philo_fork, data->id,
-	time_elapsed);
-	print_msg(data->shared_data->print_sem, philo_eat, data->id,
-	time_elapsed);
+	if (!print_msg(data->shared_data->print_sem, philo_fork, data->id,
+	time_elapsed))
+		terminate_process(data);
+	if (!print_msg(data->shared_data->print_sem, philo_eat, data->id,
+	time_elapsed))
+		terminate_process(data);
 	chrono_timer(time, data->shared_data->time_to_eat);
 	sem_post(data->shared_data->forks_sem);
 	sem_post(data->shared_data->forks_sem);
@@ -112,16 +115,19 @@ int
 	{
 		printf("Loop: %d\n", data->id);
 		philo_eating(data, &time);
-		print_msg(data->shared_data->print_sem, philo_sleep, data->id,
-		chrono_get_timeelapsed(&data->shared_data->start_time));
+		if (!print_msg(data->shared_data->print_sem, philo_sleep, data->id,
+		chrono_get_timeelapsed(&data->shared_data->start_time)))
+			terminate_process(data);
 		chrono_timer(&time, data->shared_data->time_to_eat +
 		data->shared_data->time_to_sleep);
-		print_msg(data->shared_data->print_sem, philo_think, data->id,
-		chrono_get_timeelapsed(&data->shared_data->start_time));
+		if (!print_msg(data->shared_data->print_sem, philo_think, data->id,
+		chrono_get_timeelapsed(&data->shared_data->start_time)))
+			terminate_process(data);
 		if (i > 0)
 			i--;
 		if (data->id % 2)
 			usleep(300);
 	}
+	terminate_process(data);
 	return (0);
 }
