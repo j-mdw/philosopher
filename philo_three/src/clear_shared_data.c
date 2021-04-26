@@ -38,6 +38,11 @@ static int
 		sem_close(shared_data->print_sem);
 		ret += sem_unlink(PRINT_SEM);
 	}
+	if (shared_data->death_sem)
+	{
+		sem_close(shared_data->death_sem);
+		sem_unlink(DEATH_SEM); //Not checking ret value as it will often be an error as sem is unlinked in case of philo death
+	}
 	return (ret);
 }
 

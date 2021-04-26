@@ -30,9 +30,9 @@
 # define FROK_GRAB_SEM "/fork_grab"
 # define POST_SEM "/post_sem"
 # define PRINT_SEM "/print_sem"
+# define DEATH_SEM "/death_sem"
 # define SEM_MOD 0644
 
-// int g_philo_death;
 
 typedef enum	e_print_msg {
 	philo_fork,
@@ -50,12 +50,13 @@ typedef struct	s_philo_shared_data {
 	int				time_to_eat;
 	int				time_to_sleep;
 	int				max_eat;
-	struct timeval	last_meal;
 	sem_t			*forks_sem;
 	sem_t			*fork_grab_sem;
 	sem_t			*print_sem;
 	sem_t			*post_sem;
+	sem_t			*death_sem;
 	struct timeval	start_time;
+	struct timeval	last_meal;
 }				t_philo_shared_data;
 
 typedef struct	s_philo_data {

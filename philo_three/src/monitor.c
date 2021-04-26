@@ -36,7 +36,8 @@ void
 	t_philo_data 	*data;
 
 	data = (t_philo_data *)shared_data;
-	while (1)
+	while ((data->shared_data->max_eat == -1) || 
+	data->shared_data->eat_count < data->shared_data->max_eat)
 	{
 		if (check_death(data->shared_data, data->id))
 			terminate_process(data);

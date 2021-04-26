@@ -15,7 +15,6 @@
 int
 	philo_create(t_philo_shared_data *shared_data, int id)
 {
-	// pthread_t		philo_thread;
 	t_philo_data	philo_data;
 	pid_t			child;
 	int				wstatus;
@@ -24,14 +23,10 @@ int
 		return (0);
 	philo_data.id = id;
 	philo_data.shared_data = shared_data;
-
 	if ((child = fork()) < 0)
 		return (-1);
 	if (child == 0)
-	// {
 		philo_life(&philo_data);
-		// return (0);
-	// }
 	else
 	{
 		philo_create(shared_data, id + 1);

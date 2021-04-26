@@ -48,6 +48,7 @@ static void
 	shared_data->fork_grab_sem = NULL;
 	shared_data->post_sem = NULL;
 	shared_data->print_sem = NULL;
+	shared_data->death_sem = NULL;
 	shared_data->eat_count = 0;
 	if (ac == 6)
 		shared_data->max_eat = philo_atoi(av[5]);
@@ -81,7 +82,8 @@ int
 	// 	return (clear_shared_data(shared_data));
 	if (!(shared_data->print_sem = sem_open_check(PRINT_SEM, 1)))
 		return (clear_shared_data(shared_data));
-
+	if (!(shared_data->print_sem = sem_open_check(DEATH_SEM, 1)))
+		return (clear_shared_data(shared_data));
 	// if (!(shared_data->last_meal = (struct timeval *)malloc(
 	// 	sizeof(struct timeval)
 	// 	* shared_data->nb_philo)))
