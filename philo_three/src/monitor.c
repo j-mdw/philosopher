@@ -40,10 +40,12 @@ void
 	data->shared_data->eat_count < data->shared_data->max_eat)
 	{
 		if (check_death(data->shared_data, data->id))
-			terminate_process(data);
+			// terminate_process(data);
+			break ;
 		if (data->shared_data->max_eat != -1 &&
 		data->shared_data->eat_count == data->shared_data->max_eat)
-			terminate_process(data);
+			// terminate_process(data);
+			break ;
 		usleep(data->shared_data->time_to_die / 10);
 	}
 	return (NULL);

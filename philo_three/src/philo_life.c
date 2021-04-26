@@ -100,7 +100,7 @@ int
 		return (-1);
 	if ((pthread_create(&monitor_th, NULL, monitor_death, data) != 0))
 		return (-1);
-	pthread_detach(monitor_th);
+	// pthread_detach(monitor_th);
 	if (data->id % 2)
 		my_usleep(data->shared_data->time_to_eat / 2,
 		chrono_timeval_to_long(&data->shared_data->start_time));
@@ -121,6 +121,7 @@ int
 		if (data->id % 2)
 			usleep(300);
 	}
+	pthread_join(monitor_th, NULL);
 	terminate_process(data);
 	return (0);
 }

@@ -81,21 +81,21 @@ int
 		"died\n"};
 	sem_t	*p_sem;
 	
-	printf("About to grab print sem: %d\n", id);
+	// printf("About to grab print sem: %d\n", id);
 	sem_wait(print_sem);
-	printf("Print sem grabbed: %d\n", id);
+	// printf("Print sem grabbed: %d\n", id);
 	p_sem = sem_open(DEATH_SEM, 0);
 	if (p_sem == SEM_FAILED)
 	{
 		sem_post(print_sem);
-		printf("Sem failed - death sem - %d\n", id); //DEBUG
+		// printf("Sem failed - death sem - %d\n", id); //DEBUG
 		return (0);
 	}
 	sem_close(p_sem);
 	if (state == philo_dead)
 	{
 		sem_unlink(DEATH_SEM);
-		printf("p_sem unlinked: %d\n", id);
+		// printf("p_sem unlinked: %d\n", id);
 	}
 	index = cpy_nbr(time_micro / 1000, print_arr);
 	print_arr[index++] = ' ';
