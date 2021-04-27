@@ -27,7 +27,7 @@
 # include <signal.h>
 
 # define FORKS_SEM "/forks_sem"
-# define FROK_GRAB_SEM "/fork_grab"
+# define FORK_GRAB_SEM "/fork_grab"
 # define POST_SEM "/post_sem"
 # define PRINT_SEM "/print_sem"
 # define DEATH_SEM "/death_sem"

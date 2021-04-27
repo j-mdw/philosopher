@@ -76,13 +76,16 @@ int
 	if (!(shared_data->forks_sem = sem_open_check(FORKS_SEM,
 		shared_data->nb_forks)))
 		return (clear_shared_data(shared_data));
-	if (!(shared_data->fork_grab_sem = sem_open_check(FROK_GRAB_SEM, 1)))
+	sem_close(shared_data->forks_sem);
+	if (!(shared_data->fork_grab_sem = sem_open_check(FORK_GRAB_SEM, 1)))
 		return (clear_shared_data(shared_data));
 	// if (!(shared_data->post_sem = sem_open_check(POST_SEM, 1)))
 	// 	return (clear_shared_data(shared_data));
+	sem_close(shared_data->fork_grab_sem);	
 	if (!(shared_data->print_sem = sem_open_check(PRINT_SEM, 1)))
 		return (clear_shared_data(shared_data));
-	if (!(shared_data->print_sem = sem_open_check(DEATH_SEM, 1)))
+	sem_close(shared_data->print_sem);	
+	if (!(shared_data->death_sem = sem_open_check(DEATH_SEM, 1)))
 		return (clear_shared_data(shared_data));
 	sem_close(shared_data->death_sem);
 	// if (!(shared_data->last_meal = (struct timeval *)malloc(

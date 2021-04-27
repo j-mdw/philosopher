@@ -72,7 +72,7 @@ static int
 {
 	if ((data->forks_sem = sem_open(FORKS_SEM, 0)) == SEM_FAILED)
 		return (0);
-	if ((data->fork_grab_sem = sem_open(FROK_GRAB_SEM, 0)) == SEM_FAILED)
+	if ((data->fork_grab_sem = sem_open(FORK_GRAB_SEM, 0)) == SEM_FAILED)
 		return (0);
 	if ((data->print_sem = sem_open(PRINT_SEM, 0)) == SEM_FAILED)
 		return (0);
@@ -101,7 +101,6 @@ int
 		return (-1);
 	if ((pthread_create(&monitor_th, NULL, monitor_death, data) != 0))
 		return (-1);
-	// pthread_detach(monitor_th);
 	if (data->id % 2)
 		my_usleep(data->shared_data->time_to_eat / 2,
 		chrono_timeval_to_long(&data->shared_data->start_time));

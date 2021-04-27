@@ -34,40 +34,6 @@ static int
 	return (i);
 }
 
-// int
-// 	print_msg(sem_t *print_sem, int state, int id, int time_micro)
-// {
-// 	static char print_arr[4096];
-// 	int			index;
-// 	static char *state_arr[5] = {
-// 		"has taken a fork\n",
-// 		"is eating\n",
-// 		"is sleeping\n",
-// 		"is thinking\n",
-// 		"died\n"};
-
-// 	if (sem_wait(print_sem) != 0)
-// 	{
-// 		printf("Semwait failed: process %d\n", id);
-// 		return (0);
-// 	}
-// 	if (state == philo_dead)
-// 	{
-// 		sem_close(print_sem);
-// 		sem_unlink(PRINT_SEM);
-// 		printf("Print sem unlinked\n");
-// 	}
-// 	index = cpy_nbr(time_micro / 1000, print_arr);
-// 	print_arr[index++] = ' ';
-// 	index += cpy_nbr(id, &print_arr[index]);
-// 	print_arr[index++] = ' ';
-// 	index += ft_strcpy(state_arr[state], &print_arr[index]);
-// 	write(1, print_arr, index);
-// 	if (state != philo_dead)
-// 		sem_post(print_sem);
-// 	return (1);
-// }
-
 int
 	print_msg(sem_t *print_sem, int state, int id, int time_micro)
 {
