@@ -6,7 +6,7 @@
 /*   By: jmaydew <jmaydew@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/24 18:10:15 by jmaydew           #+#    #+#             */
-/*   Updated: 2021/04/24 18:20:04 by jmaydew          ###   ########.fr       */
+/*   Updated: 2021/04/27 20:19:45 by jmaydew          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,16 @@ static int
 }
 
 int
-	philo_eating_2(t_philo_data *data, struct timeval *time)
+	philo_eating_2(t_philo_data *data, struct timeval *time,
+	long long int timefe)
 {
-	if (!send_print(data, philo_fork))
+	if (!print_msg(data->shared_data->print_sem, philo_fork, data->id, timefe))
 	{
 		sem_post(data->shared_data->forks_sem);
 		sem_post(data->shared_data->forks_sem);
 		return (0);
 	}
-	if (!send_print(data, philo_eat))
+	if (!print_msg(data->shared_data->print_sem, philo_eat, data->id, timefe))
 	{
 		sem_post(data->shared_data->forks_sem);
 		sem_post(data->shared_data->forks_sem);
@@ -66,7 +67,7 @@ int
 	data->shared_data->last_meal.tv_usec = time->tv_usec;
 	data->shared_data->eat_count++;
 	sem_post(data->shared_data->post_sem);
-	if (!(philo_eating_2(data, time)))
+	if (!(philo_eating_2(data, time, time_elapsed)))
 		return (0);
 	return (1);
 }
@@ -111,8 +112,7 @@ int
 		data->shared_data->time_to_sleep);
 		if (!send_print(data, philo_think))
 			break ;
-		if (i > 0)
-			i--;
+		i += (-1 * (i > 0));
 		if (data->id % 2)
 			usleep(300);
 	}

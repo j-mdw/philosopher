@@ -6,7 +6,7 @@
 /*   By: jmaydew <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/24 18:10:15 by jmaydew           #+#    #+#             */
-/*   Updated: 2021/04/24 18:14:42 by jmaydew          ###   ########.fr       */
+/*   Updated: 2021/04/27 19:55:48 by jmaydew          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int
 	print_msg(sem_t *print_sem, int state, int id, int time_micro)
 {
 	sem_t	*p_sem;
-	
+
 	sem_wait(print_sem);
 	p_sem = sem_open(DEATH_SEM, 0);
 	if (p_sem == SEM_FAILED)

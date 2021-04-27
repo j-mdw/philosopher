@@ -1,28 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   my_usleep.c                                        :+:      :+:    :+:   */
+/*   philo_create.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmaydew <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/24 17:22:05 by jmaydew           #+#    #+#             */
-/*   Updated: 2021/04/27 22:18:14 by jmaydew          ###   ########.fr       */
+/*   Updated: 2021/04/24 18:02:40 by jmaydew          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_one.h"
 
-void
-	my_usleep(int micro, long long int start_time)
+int
+	philo_create(t_philo_shared_data *shared_data, int id)
 {
-	struct timeval current_time;
+	pthread_t		philo_thread;
+	t_philo_data	philo_data;
 
-	while (1)
+	if (id > shared_data->nb_philo)
 	{
-
-		chrono_start(&current_time);
-		if ((chrono_timeval_to_long(&current_time) - start_time) >= micro)
-			return ;
-		usleep(100);
+		return (0);
 	}
+	philo_data.id = id;
+	philo_data.shared_data = shared_data;
+	if (pthread_create(&philo_thread, NULL, philo_life, &philo_data))
+		return (-1);
+	if (philo_create(shared_data, id + 1))
+		return (-1);
+	pthread_join(philo_thread, NULL);
+	return (0);
 }

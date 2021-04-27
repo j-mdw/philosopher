@@ -6,7 +6,7 @@
 /*   By: jmaydew <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/24 18:10:15 by jmaydew           #+#    #+#             */
-/*   Updated: 2021/04/25 22:32:20 by jmaydew          ###   ########.fr       */
+/*   Updated: 2021/04/27 20:20:07 by jmaydew          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,10 @@ static int
 void
 	*monitor_death(void *shared_data)
 {
-	t_philo_data 	*data;
+	t_philo_data	*data;
 
 	data = (t_philo_data *)shared_data;
-	while ((data->shared_data->max_eat == -1) || 
+	while ((data->shared_data->max_eat == -1) ||
 	data->shared_data->eat_count < data->shared_data->max_eat)
 	{
 		if (check_death(data->shared_data, data->id))

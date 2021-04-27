@@ -6,7 +6,7 @@
 /*   By: jmaydew <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/24 18:10:15 by jmaydew           #+#    #+#             */
-/*   Updated: 2021/04/24 18:21:38 by jmaydew          ###   ########.fr       */
+/*   Updated: 2021/04/27 20:25:22 by jmaydew          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int
 	if (!init_data(&shared_data, ac, av))
 		return (EXIT_FAILURE);
 	if (shared_data.nb_philo <= 1)
-	{	
+	{
 		printf("Not enough philosophers\n");
 		return (EXIT_FAILURE);
 	}

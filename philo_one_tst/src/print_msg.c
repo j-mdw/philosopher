@@ -66,7 +66,7 @@ void
 		pthread_mutex_lock(print_mutex);
 		if (!g_philo_death || state == philo_dead)
 		{
-			index = write_nbr(time_micro / 1000, print_arr);
+			index = write_nbr(time_micro, print_arr);
 			print_arr[index++] = ' ';
 			index += write_nbr(id, &print_arr[index]);
 			print_arr[index++] = ' ';

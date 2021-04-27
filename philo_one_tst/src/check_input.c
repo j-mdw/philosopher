@@ -1,28 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcpy.c                                        :+:      :+:    :+:   */
+/*   check_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmaydew <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/27 19:54:45 by jmaydew           #+#    #+#             */
-/*   Updated: 2021/04/27 19:54:47 by jmaydew          ###   ########.fr       */
+/*   Created: 2021/04/24 17:22:05 by jmaydew           #+#    #+#             */
+/*   Updated: 2021/04/24 17:22:05 by jmaydew          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo_three.h"
+#include "philo_one.h"
 
 int
-	ft_strcpy(char *src, char *cpy)
+	check_input(int ac, char **av)
 {
 	int i;
+	int j;
 
-	i = 0;
-	while (src[i])
+	if (ac < 5 || ac > 6)
+		return (0);
+	i = 1;
+	while (i < ac)
 	{
-		cpy[i] = src[i];
+		j = 0;
+		while (av[i][j])
+		{
+			if (av[i][j] > '9' || av[i][j] < '0')
+				return (0);
+			j++;
+		}
 		i++;
 	}
-	cpy[i] = 0;
-	return (i);
+	return (1);
 }

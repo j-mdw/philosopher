@@ -6,7 +6,7 @@
 /*   By: jmaydew <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/24 18:10:15 by jmaydew           #+#    #+#             */
-/*   Updated: 2021/04/25 22:01:06 by jmaydew          ###   ########.fr       */
+/*   Updated: 2021/04/27 20:20:52 by jmaydew          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static void
 	set_first_meal(t_philo_shared_data *shared_data)
 {
 	shared_data->last_meal.tv_sec = shared_data->start_time.tv_sec;
-	shared_data->last_meal.tv_usec =shared_data->start_time.tv_usec;
+	shared_data->last_meal.tv_usec = shared_data->start_time.tv_usec;
 }
 
 static void
@@ -75,16 +75,16 @@ int
 	init_shared_data(shared_data, ac, av);
 	if (!(shared_data->forks_sem = sem_open_check(FORKS_SEM,
 		shared_data->nb_forks)))
-		return (clear_shared_data(shared_data));
+		return (clear_shared_data());
 	sem_close(shared_data->forks_sem);
 	if (!(shared_data->fork_grab_sem = sem_open_check(FORK_GRAB_SEM, 1)))
-		return (clear_shared_data(shared_data));
-	sem_close(shared_data->fork_grab_sem);	
+		return (clear_shared_data());
+	sem_close(shared_data->fork_grab_sem);
 	if (!(shared_data->print_sem = sem_open_check(PRINT_SEM, 1)))
-		return (clear_shared_data(shared_data));
-	sem_close(shared_data->print_sem);	
+		return (clear_shared_data());
+	sem_close(shared_data->print_sem);
 	if (!(shared_data->death_sem = sem_open_check(DEATH_SEM, 1)))
-		return (clear_shared_data(shared_data));
+		return (clear_shared_data());
 	sem_close(shared_data->death_sem);
 	chrono_start(&shared_data->start_time);
 	set_first_meal(shared_data);
