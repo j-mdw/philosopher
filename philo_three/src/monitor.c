@@ -16,7 +16,6 @@ static int
 	check_death(t_philo_shared_data *data, int id)
 {
 	sem_wait(data->post_sem);
-	// printf("%lld|%d\n", chrono_timeval_to_long(&data->last_meal), data->time_to_die);
 	if (chrono_iselapsed(&data->last_meal, data->time_to_die) &&
 	((data->max_eat == -1) || (data->eat_count < data->max_eat)))
 	{
@@ -40,11 +39,9 @@ void
 	data->shared_data->eat_count < data->shared_data->max_eat)
 	{
 		if (check_death(data->shared_data, data->id))
-			// terminate_process(data);
 			break ;
 		if (data->shared_data->max_eat != -1 &&
 		data->shared_data->eat_count == data->shared_data->max_eat)
-			// terminate_process(data);
 			break ;
 		usleep(data->shared_data->time_to_die / 10);
 	}

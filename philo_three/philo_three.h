@@ -75,6 +75,8 @@ int				philo_life(t_philo_data *data);
 void			my_usleep(int micro, long long int start_time);
 int				ft_strcpy(char *src, char *cpy);
 void			terminate_process(t_philo_data *data);
+int				cpy_nbr(unsigned int val, char *arr);
+int				philo_sem_open(t_philo_shared_data *data, char *name);
 /*
 ** CHRONO
 */
