@@ -63,7 +63,8 @@ void
 
 	if (!g_philo_death || state == philo_dead)
 	{
-		sem_wait(print_sem);
+		if (state != philo_dead)
+			sem_wait(print_sem);
 		if (!g_philo_death || state == philo_dead)
 		{
 			index = cpy_nbr(time_micro / 1000, print_arr);

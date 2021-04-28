@@ -57,6 +57,15 @@ static void
 	pthread_mutex_unlock(&data->shared_data->mutex_arr[forks[1]]);
 }
 
+static void
+	odd_philo_start(t_philo_data *data)
+{
+	print_msg(&data->shared_data->print_mutex, philo_think, data->id,
+	chrono_get_timeelapsed(&data->shared_data->start_time));
+	my_usleep(data->shared_data->time_to_eat / 2,
+	chrono_timeval_to_long(&data->shared_data->start_time));
+}
+
 void
 	*philo_life(void *philo_data)
 {
@@ -66,10 +75,9 @@ void
 	int				i;
 
 	data = (t_philo_data *)philo_data;
-	if (data->id % 2)
-		my_usleep(data->shared_data->time_to_eat / 2,
-		chrono_timeval_to_long(&data->shared_data->start_time));
 	set_forks(data->shared_data->nb_forks, data->id, &forks[0], &forks[1]);
+	if (data->id % 2)
+		odd_philo_start(data);
 	i = data->shared_data->max_eat;
 	while (i && !g_philo_death)
 	{
@@ -82,7 +90,7 @@ void
 		chrono_get_timeelapsed(&data->shared_data->start_time));
 		i -= (i > 0);
 		if (data->id % 2)
-			usleep(300);
+			usleep(500);
 	}
 	return (NULL);
 }

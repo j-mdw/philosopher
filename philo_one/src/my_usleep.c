@@ -23,6 +23,6 @@ void
 		chrono_start(&current_time);
 		if ((chrono_timeval_to_long(&current_time) - start_time) >= micro)
 			return ;
-		usleep(300);
+		usleep(USLEEP_FRACTION);
 	}
 }

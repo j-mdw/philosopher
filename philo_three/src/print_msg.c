@@ -37,7 +37,8 @@ int
 {
 	sem_t	*p_sem;
 
-	sem_wait(print_sem);
+	if (state != philo_dead)
+		sem_wait(print_sem);
 	p_sem = sem_open(DEATH_SEM, 0);
 	if (p_sem == SEM_FAILED)
 	{

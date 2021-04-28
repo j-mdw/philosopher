@@ -31,6 +31,7 @@ static int
 	check_death(t_philo_shared_data *data, int index)
 {
 	sem_wait(data->post_sem);
+	sem_wait(data->print_sem);
 	if (chrono_iselapsed(&data->last_meal[index], data->time_to_die) &&
 	((data->max_eat == -1) || (data->eat_count[index] < data->max_eat)))
 	{
@@ -41,6 +42,7 @@ static int
 		sem_post(data->post_sem);
 		return (1);
 	}
+	sem_post(data->print_sem);
 	sem_post(data->post_sem);
 	return (0);
 }
@@ -67,7 +69,7 @@ void
 			g_philo_death = 1;
 			return (NULL);
 		}
-		usleep(300);
+		usleep(MONITOR_SLEEP);
 	}
 	return (NULL);
 }

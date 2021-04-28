@@ -32,6 +32,8 @@
 # define PRINT_SEM "/print_sem"
 # define DEATH_SEM "/death_sem"
 # define SEM_MOD 0644
+# define MONITOR_SLEEP 500
+# define USLEEP_FRACTION 300
 
 typedef enum	e_print_msg {
 	philo_fork,
@@ -67,7 +69,7 @@ typedef struct	s_philo_data {
 int				clear_shared_data(void);
 void			*monitor_death(void *shared_data);
 int				init_data(t_philo_shared_data *shared_data, int ac, char **av);
-int				print_msg(sem_t *print_mutex, int state, int id, int time);
+int				print_msg(sem_t *print_sem, int state, int id, int time);
 int				check_input(int ac, char **av);
 int				philo_create(t_philo_shared_data *shared_data, int id);
 int				philo_life(t_philo_data *data);

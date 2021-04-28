@@ -86,8 +86,12 @@ static int
 	if ((pthread_create(monitor_th, NULL, monitor_death, data) != 0))
 		return (0);
 	if (data->id % 2)
+	{
+		print_msg(data->shared_data->print_sem, philo_think, data->id,
+		chrono_get_timeelapsed(&data->shared_data->start_time));
 		my_usleep(data->shared_data->time_to_eat / 2,
 		chrono_timeval_to_long(&data->shared_data->start_time));
+	}
 	return (1);
 }
 
@@ -113,8 +117,6 @@ int
 		if (!send_print(data, philo_think))
 			break ;
 		i += (-1 * (i > 0));
-		if (data->id % 2)
-			usleep(300);
 	}
 	pthread_join(monitor_th, NULL);
 	terminate_process(data);

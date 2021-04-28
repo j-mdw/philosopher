@@ -20,6 +20,9 @@
 # include <sys/time.h>
 # include <string.h>
 
+# define MONITOR_SLEEP 500
+# define USLEEP_FRACTION 300
+
 int g_philo_death;
 
 typedef enum	e_print_msg {

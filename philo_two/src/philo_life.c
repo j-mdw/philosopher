@@ -39,6 +39,15 @@ void
 	sem_post(data->shared_data->forks_sem);
 }
 
+static void
+	odd_philo_start(t_philo_data *data)
+{
+	print_msg(data->shared_data->print_sem, philo_think, data->id,
+	chrono_get_timeelapsed(&data->shared_data->start_time));
+	my_usleep(data->shared_data->time_to_eat / 2,
+	chrono_timeval_to_long(&data->shared_data->start_time));
+}
+
 void
 	*philo_life(void *philo_data)
 {
@@ -48,8 +57,7 @@ void
 
 	data = (t_philo_data *)philo_data;
 	if (data->id % 2)
-		my_usleep(data->shared_data->time_to_eat / 2,
-		chrono_timeval_to_long(&data->shared_data->start_time));
+		odd_philo_start(data);
 	i = data->shared_data->max_eat;
 	while (i && !g_philo_death)
 	{
@@ -62,8 +70,6 @@ void
 		chrono_get_timeelapsed(&data->shared_data->start_time));
 		if (i > 0)
 			i--;
-		if (data->id % 2)
-			usleep(300);
 	}
 	return (NULL);
 }
