@@ -6,7 +6,7 @@
 /*   By: jmaydew <jmaydew@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/24 17:22:05 by jmaydew           #+#    #+#             */
-/*   Updated: 2021/04/29 10:51:38 by jmaydew          ###   ########.fr       */
+/*   Updated: 2021/04/29 11:58:15 by jmaydew          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,8 +80,7 @@ void
 	while (i && !g_philo_death)
 	{
 		philo_eating(data, &time, forks);
-		i -= (i > 0);
-		if (i == 0)
+		if ((i -= (i > 0)) == 0)
 			break ;
 		print_msg(&data->shared_data->print_mutex, philo_sleep, data->id,
 		chrono_get_timeelapsed(&data->shared_data->start_time));
