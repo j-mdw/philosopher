@@ -49,8 +49,8 @@ static int
 	return (i);
 }
 
-void
-	print_msg(sem_t *print_sem, int state, int id, int time_micro)
+static void
+	print_msg_stdout(int state, int id, int time_micro)
 {
 	static char print_arr[4096];
 	int			index;
@@ -61,18 +61,30 @@ void
 		"is thinking\n",
 		"died\n"};
 
+	index = cpy_nbr(time_micro / 1000, print_arr);
+	print_arr[index++] = ' ';
+	index += cpy_nbr(id, &print_arr[index]);
+	print_arr[index++] = ' ';
+	index += ft_strcpy(state_arr[state], &print_arr[index]);
+	write(1, print_arr, index);
+}
+
+void
+	print_msg(sem_t *print_sem, int state, int id, int time_micro)
+{
 	if (!g_philo_death || state == philo_dead)
 	{
 		if (state != philo_dead)
 			sem_wait(print_sem);
 		if (!g_philo_death || state == philo_dead)
 		{
-			index = cpy_nbr(time_micro / 1000, print_arr);
-			print_arr[index++] = ' ';
-			index += cpy_nbr(id, &print_arr[index]);
-			print_arr[index++] = ' ';
-			index += ft_strcpy(state_arr[state], &print_arr[index]);
-			write(1, print_arr, index);
+			if (state == philo_fork_eat)
+			{
+				print_msg_stdout(philo_fork, id, time_micro);
+				print_msg_stdout(philo_eat, id, time_micro);
+			}
+			else
+				print_msg_stdout(state, id, time_micro);
 		}
 		sem_post(print_sem);
 	}

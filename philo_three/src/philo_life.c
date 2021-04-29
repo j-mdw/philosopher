@@ -6,7 +6,7 @@
 /*   By: jmaydew <jmaydew@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/24 18:10:15 by jmaydew           #+#    #+#             */
-/*   Updated: 2021/04/27 20:19:45 by jmaydew          ###   ########.fr       */
+/*   Updated: 2021/04/29 10:53:24 by jmaydew          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,8 @@ int
 	philo_eating_2(t_philo_data *data, struct timeval *time,
 	long long int timefe)
 {
-	if (!print_msg(data->shared_data->print_sem, philo_fork, data->id, timefe))
-	{
-		sem_post(data->shared_data->forks_sem);
-		sem_post(data->shared_data->forks_sem);
-		return (0);
-	}
-	if (!print_msg(data->shared_data->print_sem, philo_eat, data->id, timefe))
+	if (!print_msg(data->shared_data->print_sem, philo_fork_eat, data->id,
+		timefe))
 	{
 		sem_post(data->shared_data->forks_sem);
 		sem_post(data->shared_data->forks_sem);

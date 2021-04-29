@@ -6,7 +6,7 @@
 /*   By: jmaydew <jmaydew@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/24 17:22:05 by jmaydew           #+#    #+#             */
-/*   Updated: 2021/04/24 17:55:32 by jmaydew          ###   ########.fr       */
+/*   Updated: 2021/04/29 10:51:38 by jmaydew          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,7 @@ static void
 	data->shared_data->last_meal[data->id - 1].tv_usec = time->tv_usec;
 	data->shared_data->eat_count[data->id - 1]++;
 	pthread_mutex_unlock(&data->shared_data->post_mutex);
-	print_msg(&data->shared_data->print_mutex, philo_fork, data->id,
-	time_elapsed);
-	print_msg(&data->shared_data->print_mutex, philo_eat, data->id,
+	print_msg(&data->shared_data->print_mutex, philo_fork_eat, data->id,
 	time_elapsed);
 	chrono_timer(time, data->shared_data->time_to_eat);
 	pthread_mutex_unlock(&data->shared_data->mutex_arr[forks[0]]);

@@ -40,7 +40,8 @@ typedef enum	e_print_msg {
 	philo_eat,
 	philo_sleep,
 	philo_think,
-	philo_dead
+	philo_dead,
+	philo_fork_eat
 }				t_print_msg;
 
 typedef struct	s_philo_shared_data {

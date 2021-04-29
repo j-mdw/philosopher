@@ -30,9 +30,7 @@ void
 	data->shared_data->last_meal[data->id - 1].tv_usec = time->tv_usec;
 	data->shared_data->eat_count[data->id - 1]++;
 	sem_post(data->shared_data->post_sem);
-	print_msg(data->shared_data->print_sem, philo_fork, data->id,
-	time_elapsed);
-	print_msg(data->shared_data->print_sem, philo_eat, data->id,
+	print_msg(data->shared_data->print_sem, philo_fork_eat, data->id,
 	time_elapsed);
 	chrono_timer(time, data->shared_data->time_to_eat);
 	sem_post(data->shared_data->forks_sem);

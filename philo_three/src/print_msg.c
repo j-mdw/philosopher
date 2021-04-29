@@ -48,7 +48,13 @@ int
 	sem_close(p_sem);
 	if (state == philo_dead)
 		sem_unlink(DEATH_SEM);
-	print_msg_stdout(state, id, time_micro);
+	if (state == philo_fork_eat)
+	{
+		print_msg_stdout(philo_fork, id, time_micro);
+		print_msg_stdout(philo_eat, id, time_micro);
+	}
+	else
+		print_msg_stdout(state, id, time_micro);
 	sem_post(print_sem);
 	return (1);
 }
