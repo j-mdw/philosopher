@@ -25,9 +25,10 @@ int
 	}
 	if (!init_data(&shared_data, ac, av))
 		return (EXIT_FAILURE);
-	if (shared_data.nb_philo <= 1)
+	if (shared_data.nb_philo <= 1 || shared_data.time_to_die <= 0
+	|| shared_data.max_eat == 0)
 	{
-		printf("Not enough philosophers\n");
+		printf("Wrong input value\n");
 		return (EXIT_FAILURE);
 	}
 	if (pthread_create(&monitor_th, NULL, monitor_death, &shared_data))

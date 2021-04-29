@@ -80,13 +80,15 @@ void
 	while (i && !g_philo_death)
 	{
 		philo_eating(data, &time, forks);
+		i -= (i > 0);
+		if (i == 0)
+			break ;
 		print_msg(&data->shared_data->print_mutex, philo_sleep, data->id,
 		chrono_get_timeelapsed(&data->shared_data->start_time));
 		chrono_timer(&time, data->shared_data->time_to_eat +
 		data->shared_data->time_to_sleep);
 		print_msg(&data->shared_data->print_mutex, philo_think, data->id,
 		chrono_get_timeelapsed(&data->shared_data->start_time));
-		i -= (i > 0);
 		if (data->id % 2)
 			usleep(500);
 	}

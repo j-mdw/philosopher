@@ -105,13 +105,15 @@ int
 	{
 		if (!philo_eating_1(data, &time))
 			break ;
+		i -= (i > 0);
+		if (i == 0)
+			break ;
 		if (!send_print(data, philo_sleep))
 			break ;
 		chrono_timer(&time, data->shared_data->time_to_eat +
 		data->shared_data->time_to_sleep);
 		if (!send_print(data, philo_think))
 			break ;
-		i += (-1 * (i > 0));
 	}
 	pthread_join(monitor_th, NULL);
 	terminate_process(data);
